@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="定制化开发方案 需求：修改颜色、字体、图片大小等。难度：低方案：定位到代码，修改css,或者需要到shopify后台修改主题 Online Store -&amp;gt; Customize 需求：修改page页布局  难度： 一般  方案：到shopify后台修改 Online Store -&amp;gt; Pages，  在富文本编辑器中直接编辑代码，增加style标签，因为在page.liquid内容最后">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shopify定制化开发">
+<meta property="og:url" content="http://yoursite.com/2018/11/09/shopify/index.html">
+<meta property="og:site_name" content="佛罗伦萨有朵云">
+<meta property="og:description" content="定制化开发方案 需求：修改颜色、字体、图片大小等。难度：低方案：定位到代码，修改css,或者需要到shopify后台修改主题 Online Store -&amp;gt; Customize 需求：修改page页布局  难度： 一般  方案：到shopify后台修改 Online Store -&amp;gt; Pages，  在富文本编辑器中直接编辑代码，增加style标签，因为在page.liquid内容最后">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/11/09/shopify/promotion_page.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/09/shopify/promotion_page_config.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/09/shopify/promotion_section_code.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/09/shopify/shopify_app.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/09/shopify/meta_field.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/09/shopify/privy.jpg">
+<meta property="og:updated_time" content="2019-03-09T07:03:26.430Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shopify定制化开发">
+<meta name="twitter:description" content="定制化开发方案 需求：修改颜色、字体、图片大小等。难度：低方案：定位到代码，修改css,或者需要到shopify后台修改主题 Online Store -&amp;gt; Customize 需求：修改page页布局  难度： 一般  方案：到shopify后台修改 Online Store -&amp;gt; Pages，  在富文本编辑器中直接编辑代码，增加style标签，因为在page.liquid内容最后">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/09/shopify/promotion_page.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/09/shopify/">
+
+
+
+
+
+  <title>shopify定制化开发 | 佛罗伦萨有朵云</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">佛罗伦萨有朵云</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/09/shopify/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="广场上的牛肚包">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佛罗伦萨有朵云">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">shopify定制化开发</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-09T13:59:15+08:00">
+                2018-11-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目总结/" itemprop="url" rel="index">
+                    <span itemprop="name">项目总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="定制化开发方案"><a href="#定制化开发方案" class="headerlink" title="定制化开发方案"></a>定制化开发方案</h3><ol>
+<li>需求：修改颜色、字体、图片大小等。<br>难度：低<br>方案：定位到代码，修改css,或者需要到shopify后台修改主题 Online Store -&gt; Customize</li>
+<li>需求：修改page页布局<br>  难度： 一般<br>  方案：到shopify后台修改 Online Store -&gt; Pages，<br>  在富文本编辑器中直接编辑代码，增加style标签，因为在page.liquid内容最后会被渲染出来,无法直接修改代码。<br>  参考： <a href="https://desiredesignshop.myshopify.com/pages/bulldog-tank" target="_blank" rel="noopener">https://desiredesignshop.myshopify.com/pages/bulldog-tank</a></li>
+<li><p>需求：增加购买按钮，buy at aliexpress等第三网站<br>难度：一般<br>方案： 在app metafileds进行自定义字段配置，需要的时候引入<br>参考： <a href="https://sunnzoofficial.myshopify.com/products/16gb-bluetooth-hifi-digital-mp3-music-player-with-50-hours-audio-playback" target="_blank" rel="noopener">https://sunnzoofficial.myshopify.com/products/16gb-bluetooth-hifi-digital-mp3-music-player-with-50-hours-audio-playback</a><br>代码： （位置：snippet文件夹下pr_form.liquid下）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"cust_btn_wrapper"</span>&gt;</span><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"buy_at_amz"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&#123;&#123;product.metafields.amazon.buy_at_amazon&#125;&#125;"</span> <span class="attr">target</span>=<span class="string">"_blank"</span> &gt;</span>BUY ON AMAZON<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>需求： 增加可配置模块到产品页或其他自定义page页<br>  难度： 稍高<br>  方案： 新建section，这个section里面定义schema设置各种配置项,在需要的liquid文件include进去。<br>  参考： <a href="https://sunnzoofficial.myshopify.com/pages/promotion" target="_blank" rel="noopener">https://sunnzoofficial.myshopify.com/pages/promotion</a><br>代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;%- section &apos;promotion&apos; -%&#125;</span><br></pre></td></tr></table></figure>
+<p>效果：    </p>
+<img src="/2018/11/09/shopify/promotion_page.png">
+<img src="/2018/11/09/shopify/promotion_page_config.png">
+<img src="/2018/11/09/shopify/promotion_section_code.png"></li>
+<li>需求：挪动插件app位置，如review或弹窗<br>  难度：看情况<br>  方案：能用css解决用css,不能的只能用js操作dom,但是第三方app加载可能延迟不能即时获取dom,只能调用setTimeout或setInterval去捕获节点，可能用到ele.append(elel1)</li>
+</ol>
+<h3 id="常用APP"><a href="#常用APP" class="headerlink" title="常用APP"></a>常用APP</h3><img src="/2018/11/09/shopify/shopify_app.png">  
+<ol>
+<li>metafield 用于自定义跟产品绑定的自定义字段<img src="/2018/11/09/shopify/meta_field.png">   </li>
+<li><p>Rivyo Product Review 用于显示产品评论星级，该 APP 有提供文档提供嵌入的代码片段 或者尝试</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wc_product_review_badge"</span> <span class="attr">data-handle</span>=<span class="string">"&#123;&#123; product.handle &#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Privy - Free email popups with exit intent  弹窗或标签页用于收集邮箱获取优惠码等，参考 <a href="https://pamapic.net/pages/deal" target="_blank" rel="noopener">https://pamapic.net/pages/deal</a></p>
+<img src="/2018/11/09/shopify/privy.jpg">   
+</li>
+</ol>
+<h3 id="shopify代码目录"><a href="#shopify代码目录" class="headerlink" title="shopify代码目录"></a>shopify代码目录</h3><ul>
+<li>assets<ul>
+<li>global.scss.liquid (全局样式)</li>
+<li>theme.scss.liquid （主题样式）</li>
+<li>theme.js</li>
+</ul>
+</li>
+<li>config<ul>
+<li>settings_data.son</li>
+<li>settings_schema.json  </li>
+</ul>
+</li>
+<li>layout<ul>
+<li>theme.liquid (主文件 引入assets中的js等文件) </li>
+</ul>
+</li>
+<li>locales</li>
+<li>sections（各种页面可定制化配置的模块）</li>
+<li>snippets （粒度最小的组件，如sidebar/header）</li>
+<li>templates （各种页面模板，如产品页、collection页面、contactUs、aboutUs页面）</li>
+<li>config.yml</li>
+</ul>
+<h3 id="修改模式"><a href="#修改模式" class="headerlink" title="修改模式"></a>修改模式</h3><ol>
+<li>获取源代码到本地，本地修改后push到线上，需安装themekit, 参考 <a href="https://shopify.github.io/themekit/" target="_blank" rel="noopener">https://shopify.github.io/themekit/</a>, 类似于git pull的theme download命令，类似于git push的theme watch</li>
+<li>shoify后台进入edit code 修改线上代码</li>
+<li>shopfiy后台进入customize修改配置</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/16/vue2/" rel="next" title="vue学习纪录(二)">
+                <i class="fa fa-chevron-left"></i> vue学习纪录(二)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/12/fe-engineering/" rel="prev" title="《前端工程化设计与实践》阅读笔记">
+                《前端工程化设计与实践》阅读笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">广场上的牛肚包</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定制化开发方案"><span class="nav-number">1.</span> <span class="nav-text">定制化开发方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用APP"><span class="nav-number">2.</span> <span class="nav-text">常用APP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shopify代码目录"><span class="nav-number">3.</span> <span class="nav-text">shopify代码目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改模式"><span class="nav-number">4.</span> <span class="nav-text">修改模式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">广场上的牛肚包</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

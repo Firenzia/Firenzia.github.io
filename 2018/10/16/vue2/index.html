@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="基础数组更新vue包含一组观察数组变异方法，使用它们改变数组也会触发视图更新，push/pop/shift/unshift/splice/sort/reverse，但是非变异方法不改变数组（filter/concat/slice），可以用新数组代替就数组实现视图更新。xx = xx.filter()注意：arr[3]=newVal 不会被检测到可以：  使用vue内置的set  1this.$se">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue学习纪录(二)">
+<meta property="og:url" content="http://yoursite.com/2018/10/16/vue2/index.html">
+<meta property="og:site_name" content="佛罗伦萨有朵云">
+<meta property="og:description" content="基础数组更新vue包含一组观察数组变异方法，使用它们改变数组也会触发视图更新，push/pop/shift/unshift/splice/sort/reverse，但是非变异方法不改变数组（filter/concat/slice），可以用新数组代替就数组实现视图更新。xx = xx.filter()注意：arr[3]=newVal 不会被检测到可以：  使用vue内置的set  1this.$se">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-09T07:03:26.468Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue学习纪录(二)">
+<meta name="twitter:description" content="基础数组更新vue包含一组观察数组变异方法，使用它们改变数组也会触发视图更新，push/pop/shift/unshift/splice/sort/reverse，但是非变异方法不改变数组（filter/concat/slice），可以用新数组代替就数组实现视图更新。xx = xx.filter()注意：arr[3]=newVal 不会被检测到可以：  使用vue内置的set  1this.$se">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/16/vue2/">
+
+
+
+
+
+  <title>vue学习纪录(二) | 佛罗伦萨有朵云</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">佛罗伦萨有朵云</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/16/vue2/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="广场上的牛肚包">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佛罗伦萨有朵云">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue学习纪录(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-16T23:50:35+08:00">
+                2018-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/框架/" itemprop="url" rel="index">
+                    <span itemprop="name">框架</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="数组更新"><a href="#数组更新" class="headerlink" title="数组更新"></a>数组更新</h2><p>vue包含一组观察数组变异方法，使用它们改变数组也会触发视图更新，push/pop/shift/unshift/splice/sort/reverse，但是非变异方法不改变数组（filter/concat/slice），可以用新数组代替就数组实现视图更新。xx = xx.filter()<br>注意：arr[3]=newVal 不会被检测到<br>可以：</p>
+<ol>
+<li><p>使用vue内置的set </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$set(arr, <span class="number">3</span>, newVal)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用数组的变异方法splice</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.splice(<span class="number">3</span>,<span class="number">1</span>, newVal)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="方法与事件"><a href="#方法与事件" class="headerlink" title="方法与事件"></a>方法与事件</h2><p>@click调用的方法名可以不带括号”()”，此时，如果方法有参数，默认会将原生事件对象event传入。在大部分场景下，如果方法不需要写参数，可以简便不写括号。Vue提供了一个特殊变量$event，用于访问原生DOM事件，例如下面阻止链接打开。如果使用内联语句，语句可以访问一个 $event 属性：v-on:click=”handle(‘ok’, $event)”<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;a herf=<span class="string">"www.baidu.com"</span> @click=<span class="string">"handle('禁止打开'，$event)&gt;&lt;/a&gt;</span></span><br><span class="line"><span class="string">handle(message, event)&#123;</span></span><br><span class="line"><span class="string">    event.preventDefault()</span></span><br><span class="line"><span class="string">    window.aleart(message)</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="事件修饰符"><a href="#事件修饰符" class="headerlink" title="事件修饰符"></a>事件修饰符</h3><ul>
+<li><p>prevent </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;form @submit.prevent=<span class="string">"submit"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span> <span class="comment">// 阻止表单提交刷新页面</span></span><br><span class="line">&lt;a href=<span class="string">"www.baidu.com"</span> @click.prevent=<span class="string">"goTo"</span>&gt; <span class="comment">// 阻止a链接点击跳转</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>stop</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div @click.stop=<span class="string">"show"</span>&gt; <span class="comment">// 阻止点击事件冒泡</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>self</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div @click.self=<span class="string">"show"</span>&gt; <span class="comment">// 只在该元素触发时（非子元素）触发回调</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>capture</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div @click.capture=<span class="string">"show"</span>&gt; <span class="comment">// 使用事件捕获模式</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>once</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div @click.once=<span class="string">"show"</span>&gt; <span class="comment">// 只触发一次</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>键盘事件按键修饰符</p>
+<ul>
+<li>enter</li>
+<li>tab</li>
+<li>delete</li>
+<li>space</li>
+<li>up/ down<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div @keyup.shift<span class="number">.13</span>=<span class="string">"doSomething"</span>&gt; <span class="comment">// 只触发一次</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="v-model"><a href="#v-model" class="headerlink" title="v-model"></a>v-model</h2><p>表单控件在实际业务较为常见，比如单选、多选、下拉和输入。v-model用于在表单类元素绑定数据。</p>
+<p>1个单选按钮 （不需要v-model, 直接绑定一个boolean）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">:checked</span>=<span class="string">"picked"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">        el:<span class="string">'#app'</span>,</span></span><br><span class="line"><span class="undefined">        data:&#123;</span></span><br><span class="line"><span class="javascript">            picked:<span class="literal">true</span></span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>多个单选按钮 (v-model+ value)<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">v-model</span>=<span class="string">"picked"</span> <span class="attr">value</span>=<span class="string">"html"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"html"</span>&gt;</span>HTML<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">v-model</span>=<span class="string">"picked"</span> <span class="attr">value</span>=<span class="string">"CSS"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"css"</span>&gt;</span>css<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">v-model</span>=<span class="string">"picked"</span> <span class="attr">value</span>=<span class="string">"js"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"js"</span>&gt;</span>js<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line">picked: 'js'</span><br></pre></td></tr></table></figure></p>
+<p>多个多选按钮 (v-model+ value)<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">v-model</span>=<span class="string">"checked"</span> <span class="attr">value</span>=<span class="string">"html"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"html"</span>&gt;</span>HTML<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">v-model</span>=<span class="string">"checked"</span> <span class="attr">value</span>=<span class="string">"CSS"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"css"</span>&gt;</span>css<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>  <span class="attr">v-model</span>=<span class="string">"checked"</span> <span class="attr">value</span>=<span class="string">"js"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"js"</span>&gt;</span>js<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line">checked:['js','css']</span><br></pre></td></tr></table></figure></p>
+<p>v-model修饰符</p>
+<ul>
+<li>.lazy (不在input，而在change时候同步数据，即失焦或回车)</li>
+<li>.number （将输入转换为number类型，否则虽然输入的是数字，类型其实是Strng， 这个在数字输入框比较有用）</li>
+<li>trim （自动过滤首尾空格）</li>
+</ul>
+<hr>
+<h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="注册和使用"><a href="#注册和使用" class="headerlink" title="注册和使用"></a>注册和使用</h2><p>全局注册， 任何vue实例都可以使用。Vue.component(‘my-comp’,{//options})<br>组件内注册，只有该实例作用域才能使用。 使用components选项 </p>
+<p>Vue组件的模板在某些情况下会受html的限制，比如table标签规定只允许是tr/td这些表格元素，所以在table里面直接使用组件是无效的，可以用特殊的is属性来挂载组件。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;table&gt;</span><br><span class="line">    &lt;tbody is=<span class="string">"my-component"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span></span><br><span class="line">&lt;table&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="props传递数据"><a href="#props传递数据" class="headerlink" title="props传递数据"></a>props传递数据</h2><p>props中声明的数据与组件data函数reutrn的数据主要区别是props来自父级，而data中的是组件自己的数据，作用域是组件本身。这两种数据都可以在模板template、计算属性computed和方法methods中使用。</p>
+<p>有时候传递的数据不是直接写死的，而是来自父级的动态数据，可以用指令v-bind来动态绑定props的值，当父组件数据变化时，也会传递给子组件。<br><strong><font color="red">注意:当传递的不是字符串，而是数字、布尔值、数组或对象，而不用v-bind, 传递的仅仅是字符串</font></strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-comp msg=<span class="string">'[1,2,3]'</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">my-comp</span>&gt;</span></span></span><br><span class="line">&lt;my-comp :msg='[1,2,3]'&gt;&lt;/my-comp&gt;</span><br><span class="line"></span><br><span class="line">props:[msg]</span><br><span class="line">template:'&lt;div&gt;&#123;&#123;msg.length&#125;&#125;&lt;/div&gt;'  // 7 3</span><br></pre></td></tr></table></figure></p>
+<p>单向数据流<br>业务中经常遇到两种需要改变prop的情况，一种是子组件将prop作为初始值保存起来，在自己的作用域下可以随意使用和修改，这种情况可以在组件data内再声明一个数据，引用prop<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">props:[initCount]</span><br><span class="line">data:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        count: <span class="keyword">this</span>.initCount</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>另外一种是prop作为需要被转变的值传入，这种情况用计算属性就可以<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">props:[width],</span><br><span class="line">template:<span class="string">'&lt;div :style="style"&gt;&lt;/div&gt;'</span>,</span><br><span class="line">computed: style()&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="attr">width</span>: <span class="keyword">this</span>.width+<span class="string">'px'</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h2><h3 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h3><p>v-on除了监听DOM事件外，还可以用于组件间的自定义事件。<br>$emit 第一个参数是自定义事件的名称。</p>
+<p>v-on除了在组件上监听自定义事件外，还可以监听DOM事件，用<font color="red">.native</font>修饰符表示监听的是一个原生事件，是该组件的<font color="red">根元素</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;comp @click.native=<span class="string">"handelClick"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">comp</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="使用v-model"><a href="#使用v-model" class="headerlink" title="使用v-model"></a>使用v-model</h3><h4 id="语法糖"><a href="#语法糖" class="headerlink" title="语法糖"></a>语法糖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-model=&quot;price&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>语法糖，实际上是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input :value=&quot;price&quot; @input=&quot;price=$event.target.value&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>v-model作用在自定义组件上</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;cust-input v-model=&quot;price&quot;&gt;&lt;/cust-input&gt;</span><br></pre></td></tr></table></figure></p>
+<p>语法糖，实际上是（两者效果相同）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;cust-input :value=&quot;price&quot; @input=&quot;price=argument[0]&quot;&gt;</span><br><span class="line">&lt;cust-input :value=&quot;price&quot; @input=&quot;price= $event&quot;&quot;&gt;</span><br><span class="line">//在父级组件监听这个事件的时候，我们可以通过 $event 访问到被抛出的这个值</span><br></pre></td></tr></table></figure></p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>原理： 数据从父组件通过props传入，子组件内部修改了数据，通过$emit通知父组件修改props<br>实现一个具有双向绑定v-model的组件需要满足下面两个要求</p>
+<ol>
+<li>接收一个value属性</li>
+<li>在有新的value时触发input事件</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;custom-input</span><br><span class="line">  v-bind:value=<span class="string">"searchText"</span></span><br><span class="line">  v-on:input=<span class="string">"searchText = $event"</span></span><br><span class="line">&gt;<span class="xml"><span class="tag">&lt;/<span class="name">custom-input</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">Vue.component('custom-input', &#123;</span></span><br><span class="line"><span class="xml">  props: ['value'],</span></span><br><span class="line"><span class="xml">  template: `</span></span><br><span class="line">    &lt;input</span><br><span class="line">      v-bind:value="value"</span><br><span class="line">      v-on:input="$emit('input', $event.target.value)"</span><br><span class="line">    &gt;</span><br><span class="line">  `</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="slot"><a href="#slot" class="headerlink" title="slot"></a>slot</h2><p>当需要让组件组合使用时，混合父组件内容与子组件的模板时，就会用到slot, 这个过程叫做内容分发。<br>props传递数据，event触发事件和slot内容分发，构成了vue组件的3个api来源，再复杂的组件也是由这3部分组成。</p>
+<h3 id="理解作用域"><a href="#理解作用域" class="headerlink" title="理解作用域"></a>理解作用域</h3><p>父组件的模板是在父组件作用域内编译的，子组件模板的内容是在子组件作用域内编译的。slot分发的内容，作用域是在父组件上的。</p>
+<h3 id="slot用法"><a href="#slot用法" class="headerlink" title="slot用法"></a>slot用法</h3><p>在子组件内使用特殊的slot元素就可以为这个子组件开启一个插槽，在父组件模板里插入子组件标签内的所有内容都会替代子组件的slot标签及其内容。</p>
+<h3 id="具名slot"><a href="#具名slot" class="headerlink" title="具名slot"></a>具名slot</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;child-comp&gt;</span><br><span class="line">    &lt;div slot=<span class="string">"header"</span>&gt;i am header&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div&gt;test1&lt;/</span>div&gt;</span><br><span class="line">    &lt;div&gt;test2&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div slot="content"&gt;i am content&lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/child-comp&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">Vue.component('child-comp',&#123;</span></span><br><span class="line"><span class="regexp">    template:'&lt;div&gt;&lt;slot name='header'&gt;&lt;/</span>slot&gt;<span class="xml"><span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">'content'</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><span class="string">'</span></span><br><span class="line"><span class="string">&#125;)</span></span><br></pre></td></tr></table></figure>
+<p>渲染出<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>i am header<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>test1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>test2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>i am content<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="作用域插槽"><a href="#作用域插槽" class="headerlink" title="作用域插槽"></a>作用域插槽</h3><p>可从<strong><font color="red">子组件插槽获取数据</font></strong>。作用域插槽的使用场景是既能复用子组件的slot, 又可以使slot的内容不一致。<br>简单理解，父组件可以利用子组件数据为子组件定制模板，定制化信息输出。</p>
+<p>一个todolist组件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &lt;todo-list&gt;</span></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li</span><br><span class="line">    v-<span class="keyword">for</span>=<span class="string">"todo in todos"</span></span><br><span class="line">    v-bind:key=<span class="string">"todo.id"</span></span><br><span class="line">  &gt;</span><br><span class="line">    &#123;&#123; todo.text &#125;&#125;</span><br><span class="line">  &lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">&lt;/u</span>l&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改后</span></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li</span><br><span class="line">    v-<span class="keyword">for</span>=<span class="string">"todo in todos"</span></span><br><span class="line">    v-bind:key=<span class="string">"todo.id"</span></span><br><span class="line">  &gt;</span><br><span class="line">    &lt;!-- 我们为每个 todo 准备了一个插槽，--&gt;</span><br><span class="line">    &lt;!-- 将 <span class="string">`todo`</span> 对象作为一个插槽的 prop 传入。--&gt;</span><br><span class="line">    &lt;slot v-bind:todo=<span class="string">"todo"</span>&gt;</span><br><span class="line">      &lt;!-- 回退的内容 --&gt;</span><br><span class="line">      &#123;&#123; todo.text &#125;&#125;</span><br><span class="line">    &lt;<span class="regexp">/slot&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>li&gt;</span><br><span class="line">&lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/使用</span></span><br><span class="line"><span class="regexp">&lt;todo-list v-bind:todos="todos"&gt;</span></span><br><span class="line"><span class="regexp">  &lt;!-- 将 `slotProps` 定义为插槽作用域的名字 --&gt;</span></span><br><span class="line"><span class="regexp">  &lt;template slot-scope="slotProps"&gt;</span></span><br><span class="line"><span class="regexp">    &lt;!-- 为待办项自定义一个模板，--&gt;</span></span><br><span class="line"><span class="regexp">    &lt;!-- 通过 `slotProps` 定制每个待办项。--&gt;</span></span><br><span class="line"><span class="regexp">    &lt;span v-if="slotProps.todo.isComplete"&gt;✓&lt;/</span>span&gt;</span><br><span class="line">    &#123;&#123; slotProps.todo.text &#125;&#125;</span><br><span class="line">  &lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>todo-list&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h3><p>$slots, 主要用于独立组件开发。</p>
+<h2 id="高级组件"><a href="#高级组件" class="headerlink" title="高级组件"></a>高级组件</h2><p>递归组件<br>只要给组件设置name选项就可以，在组件内部递归，必须给一个条件限制递归数量，否则会栈溢出。</p>
+<p>动态组件<br>Vue提供了一个特殊的元素component来动态挂载不同的组件，使用<font color="red">is</font>特性来选择要挂载的组件。</p>
+<p>异步组件<br>vue允许将组件定义为1个工厂函数，只在组件需要渲染的时候触发工厂函数，并把结果缓存起来，用于后面再次渲染。工厂函数接收一个resovle回调，在收到服务器下载的组件定义时使用。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h2 id="nextTick"><a href="#nextTick" class="headerlink" title="$nextTick"></a>$nextTick</h2><p>重要概念<font color="red">异步更新队列</font><br>vue在挂测到数据变化的时候并不会直接更新DOM，而是开启一个队列，并缓冲在同一事件循环中发生的所有的数据改变。在缓冲时去除重复数据，从而避免不必要的计算和DOM操作。然后在下一个事件循环中，vue刷新队列更新DOM<br>$nextTick就是用来知道什么时候DOM更新完的</p>
+<h2 id="手动挂载实例"><a href="#手动挂载实例" class="headerlink" title="手动挂载实例"></a>手动挂载实例</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo 1 手动挂载</span></span><br><span class="line"><span class="keyword">new</span> Vue().$mount(<span class="string">'#root'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// demo 2</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el:<span class="string">'#root'</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// demo 3 处于文档外随后挂载</span></span><br><span class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> Vue().$mount()</span><br><span class="line">doucment.getElementById(<span class="string">'root'</span>).appendChild(instance.$el)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h1><h2 id="vue-router"><a href="#vue-router" class="headerlink" title="vue-router"></a>vue-router</h2><h3 id="前端路由实现方式"><a href="#前端路由实现方式" class="headerlink" title="前端路由实现方式"></a>前端路由实现方式</h3><ol>
+<li>hash<br>js 通过hashChange事件监听url改变</li>
+<li>history（HTML5）<br>这种模式需要服务端支持，服务端在收到所有请求后，都指向<font color="red">同一个html文件</font>，不然会出现404.因此SPA只有一个html,整个网站的内容都在这个html里面，通过js来处理。<br>webpack-dev-server也要配置增加支持history路由，增加–history-api-fallback，所有的路由会指向index.html</li>
+</ol>
+<h3 id="前端路由优点"><a href="#前端路由优点" class="headerlink" title="前端路由优点"></a>前端路由优点</h3><ol>
+<li>页面持久性，像大部分音乐网站，可以播放的时候调到其他页面，音乐不中断</li>
+<li>前后端分离</li>
+</ol>
+<h3 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h3><p>webpack会把每一个路由打包成一个js文件，在请求到该页面时，采取加载这个页面的js,这就是异步实现的懒加载，按需加载。<br>路由切换时，切换的是标签router-view挂载的组件。</p>
+<p>跳转？</p>
+<ol>
+<li>使用内置的router-link, 会被渲染成为1个a标签</li>
+<li>$router.replace()/go()/push()</li>
+</ol>
+<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><p>路由列表的meta字段可以自定义一些信息。如beforeEach钩子从路由对象to里获取meta信息，从而改变标题。</p>
+<p>beforeEach和afterEach可以做很多事情来提升用户体验</p>
+<ol>
+<li><p>页面跳转后滚动条位置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router.afterEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.scrollTo(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>页面过渡的全局loading动画， beforeEach开始，afterEach结束</p>
+</li>
+<li>next()方法设置参数，如校验登录<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">window</span>.localStorage.getItem(<span class="string">'token'</span>))&#123;</span><br><span class="line">        next()</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        next(<span class="string">'/login'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="vuex"><a href="#vuex" class="headerlink" title="vuex"></a>vuex</h2><h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>modules/ state/ getter/ mutations/ actions，<br>每个moudle有自己的state/ getter/ mutations/ actions</p>
+<h3 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h3><p>mutation尽量不要做异步操作，如果有，组件commit后，数据不能立即改变，而且不知道什么时候改变？<br>action提交的是mutaion, 而且可以异步操作业务逻辑，组件内通过$store.dispatch触发action.</p>
+<font>所有涉及数据改变，就用mutation, 存在业务逻辑的，就用actions, 至于将业务逻辑放在actions还是组件内部，根据实际场景拿捏</font>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/25/vue/" rel="next" title="vue学习纪录(一)">
+                <i class="fa fa-chevron-left"></i> vue学习纪录(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/09/shopify/" rel="prev" title="shopify定制化开发">
+                shopify定制化开发 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">广场上的牛肚包</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组更新"><span class="nav-number">1.1.</span> <span class="nav-text">数组更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法与事件"><span class="nav-number">1.2.</span> <span class="nav-text">方法与事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件修饰符"><span class="nav-number">1.2.1.</span> <span class="nav-text">事件修饰符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-model"><span class="nav-number">1.3.</span> <span class="nav-text">v-model</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件"><span class="nav-number">2.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注册和使用"><span class="nav-number">2.1.</span> <span class="nav-text">注册和使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#props传递数据"><span class="nav-number">2.2.</span> <span class="nav-text">props传递数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件通信"><span class="nav-number">2.3.</span> <span class="nav-text">组件通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义事件"><span class="nav-number">2.3.1.</span> <span class="nav-text">自定义事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用v-model"><span class="nav-number">2.3.2.</span> <span class="nav-text">使用v-model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#语法糖"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">语法糖</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">2.3.3.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slot"><span class="nav-number">2.4.</span> <span class="nav-text">slot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#理解作用域"><span class="nav-number">2.4.1.</span> <span class="nav-text">理解作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#slot用法"><span class="nav-number">2.4.2.</span> <span class="nav-text">slot用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具名slot"><span class="nav-number">2.4.3.</span> <span class="nav-text">具名slot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域插槽"><span class="nav-number">2.4.4.</span> <span class="nav-text">作用域插槽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问"><span class="nav-number">2.4.5.</span> <span class="nav-text">访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级组件"><span class="nav-number">2.5.</span> <span class="nav-text">高级组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">2.6.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nextTick"><span class="nav-number">2.7.</span> <span class="nav-text">$nextTick</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手动挂载实例"><span class="nav-number">2.8.</span> <span class="nav-text">手动挂载实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插件"><span class="nav-number">3.</span> <span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-router"><span class="nav-number">3.1.</span> <span class="nav-text">vue-router</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前端路由实现方式"><span class="nav-number">3.1.1.</span> <span class="nav-text">前端路由实现方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端路由优点"><span class="nav-number">3.1.2.</span> <span class="nav-text">前端路由优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础用法"><span class="nav-number">3.1.3.</span> <span class="nav-text">基础用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级用法"><span class="nav-number">3.1.4.</span> <span class="nav-text">高级用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vuex"><span class="nav-number">3.2.</span> <span class="nav-text">vuex</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模块"><span class="nav-number">3.2.1.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重点"><span class="nav-number">3.2.2.</span> <span class="nav-text">重点</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">广场上的牛肚包</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

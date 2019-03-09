@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="js基础,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概念迭代器（Iterator）是一个接口，为各种不同的数据结构提供统一的访问机制。任何数据只要部署了 Iterator 接口，就可以完成遍历操作。 迭代器的作用有：为各种数据结构提供一个统一的、简便的访问接口；使数据结构成员能够按某种次序排列；ES6 创造了一种新的遍历命令 for…of 循环，Iterator 接口主要供 for…of 消费。  迭代器可以看作是一个保存了指针（成员索引）的对象，">
+<meta name="keywords" content="js基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iterator与遍历">
+<meta property="og:url" content="http://yoursite.com/2018/05/14/iterator/index.html">
+<meta property="og:site_name" content="佛罗伦萨有朵云">
+<meta property="og:description" content="概念迭代器（Iterator）是一个接口，为各种不同的数据结构提供统一的访问机制。任何数据只要部署了 Iterator 接口，就可以完成遍历操作。 迭代器的作用有：为各种数据结构提供一个统一的、简便的访问接口；使数据结构成员能够按某种次序排列；ES6 创造了一种新的遍历命令 for…of 循环，Iterator 接口主要供 for…of 消费。  迭代器可以看作是一个保存了指针（成员索引）的对象，">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-09T07:03:26.428Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iterator与遍历">
+<meta name="twitter:description" content="概念迭代器（Iterator）是一个接口，为各种不同的数据结构提供统一的访问机制。任何数据只要部署了 Iterator 接口，就可以完成遍历操作。 迭代器的作用有：为各种数据结构提供一个统一的、简便的访问接口；使数据结构成员能够按某种次序排列；ES6 创造了一种新的遍历命令 for…of 循环，Iterator 接口主要供 for…of 消费。  迭代器可以看作是一个保存了指针（成员索引）的对象，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/14/iterator/">
+
+
+
+
+
+  <title>iterator与遍历 | 佛罗伦萨有朵云</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">佛罗伦萨有朵云</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/iterator/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="广场上的牛肚包">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佛罗伦萨有朵云">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iterator与遍历</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-14T17:39:10+08:00">
+                2018-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/js基础/" itemprop="url" rel="index">
+                    <span itemprop="name">js基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>迭代器（Iterator）是一个接口，为各种不同的数据结构提供统一的访问机制。任何数据只要部署了 Iterator 接口，就可以完成遍历操作。</p>
+<p>迭代器的作用有：<br>为各种数据结构提供一个统一的、简便的访问接口；<br>使数据结构成员能够按某种次序排列；<br>ES6 创造了一种新的遍历命令 for…of 循环，Iterator 接口主要供 for…of 消费。 </p>
+<p>迭代器可以看作是一个保存了指针（成员索引）的对象，这个对象有个next方法，这个函数会返回一个有value和done属性的对象，调用了next后，内部指针向下一个成员偏移。</p>
+<h3 id="for-of-原理"><a href="#for-of-原理" class="headerlink" title="for of 原理"></a>for of 原理</h3><p>就拿 for…of 语句来说，它首先调用被遍历对象的 <a href="">Symbol.iterator</a> 方法，该方法返回一个迭代器对象，迭代器对象可以是拥有 next 方法的任何对象。然后， 在 for…of 的每一次循环中，都将调用该迭代器对象上的 next 方法。<br>每一次调用 next 方法，都会返回数据结构的当前成员信息。具体来说就是返回一个包含 value 和 done 两个属性的对象。其中 value 是当前成员的值，done 是一个布尔值，表示遍历是否结束。</p>
+<h3 id="原生具备-Iterator-接口的数据结构"><a href="#原生具备-Iterator-接口的数据结构" class="headerlink" title="原生具备 Iterator 接口的数据结构"></a>原生具备 Iterator 接口的数据结构</h3><ol>
+<li>数组</li>
+<li>字符串</li>
+<li>map</li>
+<li>set</li>
+<li>nodeList</li>
+<li>Arguments</li>
+</ol>
+<h3 id="调用-Iterator-接口的场合"><a href="#调用-Iterator-接口的场合" class="headerlink" title="调用 Iterator 接口的场合"></a>调用 Iterator 接口的场合</h3><ol>
+<li>解构赋值</li>
+<li>扩展运算符</li>
+<li>yield*</li>
+<li>由于数组遍历调用迭代器接口，所以任何接受数组作为参数的场合，其实都调用了 Iterator 接口：<br>for…of<br>Array.from()<br>Map(), Set(), WeakMap(), WeakSet()<br>Promise.all()<br>Promise.race()</li>
+</ol>
+<h3 id="什么场合返回Iterator"><a href="#什么场合返回Iterator" class="headerlink" title="什么场合返回Iterator?"></a>什么场合返回Iterator?</h3><p>ES6 的数组、Set、Map 都部署了以下三个方法，调用后都返回遍历器对象。</p>
+<ol>
+<li>keys()</li>
+<li>values()</li>
+<li>entries()</li>
+</ol>
+<h3 id="for-of-对比其他遍历方法"><a href="#for-of-对比其他遍历方法" class="headerlink" title="for of 对比其他遍历方法"></a>for of 对比其他遍历方法</h3><ol>
+<li>for ：啰嗦</li>
+<li>for in ： （总之，它主要是为了遍历对象设计的，不适用于遍历数组）<br>数组的键名是数字，但是for…in循环是以字符串作为键名“0”、“1”、“2”等等。<br>for…in循环不仅遍历数字键名，还会遍历手动添加的其他键，甚至包括原型链上的键。（用hasOwnProperty判断是不是本身属性)<br>某些情况下，for…in循环会以任意顺序遍历键名。</li>
+<li>forEach： 不能用break return跳出循环</li>
+</ol>
+<p>总结 for of： </p>
+<ol>
+<li>有着同for…in一样的简洁语法，但是没有for…in那些缺点。</li>
+<li>不同于forEach方法，它可以与break、continue和return配合使用。</li>
+<li>提供了遍历所有数据结构的统一操作接口。</li>
+</ol>
+<h3 id="for-of-与对象"><a href="#for-of-与对象" class="headerlink" title="for of  与对象"></a>for of  与对象</h3><p>对于普通的对象，for…in循环可以遍历键名，for…of循环会报错。<br>for..in 会遍历到原型链<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = <span class="built_in">Object</span>.create(&#123;<span class="attr">c</span>:<span class="number">3</span>&#125;,&#123;<span class="attr">a</span>:&#123;<span class="attr">value</span>:<span class="number">1</span>,<span class="attr">enumerable</span>: <span class="literal">true</span>&#125;,<span class="attr">b</span>:&#123;<span class="attr">value</span>:<span class="number">2</span>,<span class="attr">enumerable</span>: <span class="literal">true</span>&#125;&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> obj)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(i,obj[i])</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// a 1</span></span><br><span class="line"><span class="comment">// b 2</span></span><br><span class="line"><span class="comment">// c 3</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> <span class="built_in">Object</span>.keys(obj))&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(i,obj[i])</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// a 1</span></span><br><span class="line"><span class="comment">// b 2</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js基础/" rel="tag"># js基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/18/js-OOP/" rel="next" title="js继承">
+                <i class="fa fa-chevron-left"></i> js继承
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/16/animation/" rel="prev" title="希望效果是炫酷的库洛牌动画">
+                希望效果是炫酷的库洛牌动画 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">广场上的牛肚包</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-of-原理"><span class="nav-number">2.</span> <span class="nav-text">for of 原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原生具备-Iterator-接口的数据结构"><span class="nav-number">3.</span> <span class="nav-text">原生具备 Iterator 接口的数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用-Iterator-接口的场合"><span class="nav-number">4.</span> <span class="nav-text">调用 Iterator 接口的场合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么场合返回Iterator"><span class="nav-number">5.</span> <span class="nav-text">什么场合返回Iterator?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-of-对比其他遍历方法"><span class="nav-number">6.</span> <span class="nav-text">for of 对比其他遍历方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for-of-与对象"><span class="nav-number">7.</span> <span class="nav-text">for of  与对象</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">广场上的牛肚包</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
