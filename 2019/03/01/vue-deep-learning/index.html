@@ -77,12 +77,12 @@
 
 
 
-<meta name="description" content="这段时间开始结合黄奕老师的文章 Vue.js 技术揭秘 和其他网络资源开始学习vue源码，自己将一些重要过程用xmind记录下来, 一图胜千言，请读者保存图片到本地放大了看。 vue的核心是设计一套数据响应框架，只关心视图层。数据驱动视图，不用像几年前jQ那样手动去操作dom, 数据的改变直接映射到页面的改变（反之亦可）。vue核心思想除了数据驱动还有组件化。入口文件从new Vue()开始挂载根">
+<meta name="description" content="这段时间开始结合黄奕老师的文章 Vue.js 技术揭秘 和其他网络资源开始学习vue源码，自己将一些重要过程用xmind记录下来, 一图胜千言，请读者保存图片到本地放大了看。 vue 特点vue的核心是设计一套 数据响应框架，只关心视图层。数据驱动视图，不用像几年前jQ那样手动去操作dom, 数据的改变直接映射到页面的改变（反之亦可）。vue核心思想除了数据驱动（数据的变化能引起视图的变化）还有">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue源码学习">
 <meta property="og:url" content="http://yoursite.com/2019/03/01/vue-deep-learning/index.html">
 <meta property="og:site_name" content="佛罗伦萨有朵云">
-<meta property="og:description" content="这段时间开始结合黄奕老师的文章 Vue.js 技术揭秘 和其他网络资源开始学习vue源码，自己将一些重要过程用xmind记录下来, 一图胜千言，请读者保存图片到本地放大了看。 vue的核心是设计一套数据响应框架，只关心视图层。数据驱动视图，不用像几年前jQ那样手动去操作dom, 数据的改变直接映射到页面的改变（反之亦可）。vue核心思想除了数据驱动还有组件化。入口文件从new Vue()开始挂载根">
+<meta property="og:description" content="这段时间开始结合黄奕老师的文章 Vue.js 技术揭秘 和其他网络资源开始学习vue源码，自己将一些重要过程用xmind记录下来, 一图胜千言，请读者保存图片到本地放大了看。 vue 特点vue的核心是设计一套 数据响应框架，只关心视图层。数据驱动视图，不用像几年前jQ那样手动去操作dom, 数据的改变直接映射到页面的改变（反之亦可）。vue核心思想除了数据驱动（数据的变化能引起视图的变化）还有">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/newVue.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/mount.png">
@@ -91,10 +91,10 @@
 <meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/watcherAnalysis.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/watcherCategory.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/computed.png">
-<meta property="og:updated_time" content="2019-03-09T07:03:26.438Z">
+<meta property="og:updated_time" content="2019-03-09T14:27:25.782Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue源码学习">
-<meta name="twitter:description" content="这段时间开始结合黄奕老师的文章 Vue.js 技术揭秘 和其他网络资源开始学习vue源码，自己将一些重要过程用xmind记录下来, 一图胜千言，请读者保存图片到本地放大了看。 vue的核心是设计一套数据响应框架，只关心视图层。数据驱动视图，不用像几年前jQ那样手动去操作dom, 数据的改变直接映射到页面的改变（反之亦可）。vue核心思想除了数据驱动还有组件化。入口文件从new Vue()开始挂载根">
+<meta name="twitter:description" content="这段时间开始结合黄奕老师的文章 Vue.js 技术揭秘 和其他网络资源开始学习vue源码，自己将一些重要过程用xmind记录下来, 一图胜千言，请读者保存图片到本地放大了看。 vue 特点vue的核心是设计一套 数据响应框架，只关心视图层。数据驱动视图，不用像几年前jQ那样手动去操作dom, 数据的改变直接映射到页面的改变（反之亦可）。vue核心思想除了数据驱动（数据的变化能引起视图的变化）还有">
 <meta name="twitter:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/newVue.png">
 
 
@@ -348,7 +348,10 @@
 
       
         <p>这段时间开始结合黄奕老师的文章<a href="https://ustbhuangyi.github.io/vue-analysis/" target="_blank" rel="noopener"> Vue.js 技术揭秘 </a>和其他网络资源开始学习vue源码，自己将一些重要过程用xmind记录下来, 一图胜千言，请读者保存图片到本地放大了看。</p>
-<p>vue的核心是设计一套数据响应框架，只关心视图层。数据驱动视图，不用像几年前jQ那样手动去操作dom, 数据的改变直接映射到页面的改变（反之亦可）。vue核心思想除了数据驱动还有组件化。入口文件从new Vue()开始挂载根实例，然后不同组件作为根实例的子孙节点挂载在父节点（其他vue实例）上。<br>响应式系统的核心是数据的变化能引起视图的变化，这里用到的设计模式是发布-订阅模式，即一方A发生变化，依赖的另一方B能收到通知。这里具体的体现是数据改变，引起视图的改变。<br>从vue的使用，；我们知道A指的是数据，即vue配置项中data/computed/props定义的内容<br>vue源码中相关的几个概念是dep,sub,watcher，dep是依赖相关，sub是订阅相关，watcher我的理解是上文中的B的角色。</p>
+<h3 id="vue-特点"><a href="#vue-特点" class="headerlink" title="vue 特点"></a>vue 特点</h3><p>vue的核心是设计一套 <strong><font color="#4995ff">数据响应框架</font></strong>，只关心视图层。数据驱动视图，不用像几年前jQ那样手动去操作dom, 数据的改变直接映射到页面的改变（反之亦可）。<br>vue核心思想除了数据驱动（数据的变化能引起视图的变化）还有 <strong><font color="#4995ff">组件化</font></strong>。入口文件从new Vue()开始挂载根实例，然后不同组件作为根实例的子孙节点挂载在父节点（其他vue实例）上。</p>
+<h3 id="设计模式与相关概念"><a href="#设计模式与相关概念" class="headerlink" title="设计模式与相关概念"></a>设计模式与相关概念</h3><h4 id="vue是观察者模式还是发布订阅模式？"><a href="#vue是观察者模式还是发布订阅模式？" class="headerlink" title="vue是观察者模式还是发布订阅模式？"></a>vue是观察者模式还是发布订阅模式？</h4><p>观察者模式和发布订阅模式是类似的，区别在于发布是否有<strong>调度中心</strong>，观察者模式没有。<br>在观察者模式中，目标（发布者）和观察者（订阅者）是基类，目标提供维护观察者的一系列方法，观察者提供更新接口。具体观察者和具体目标继承各自的基类，然后具体观察者把自己注册到具体目标里，在具体目标发生变化时候，调度观察者的更新方法。subject维护一个observer列表，发布消息的时候遍历这个列表，调用每个observer的update方法（即订阅回调函数）；<br>在发布-订阅模式中，调度中心对外暴露发布publish 和订阅 subscribe方法，订阅方调用调度中心的subscribe方法注册事件名和事件回调函数，发布方调用调度中心的publish方法进行消息发布，调度中心publish 方法触发会去遍历已注册的事件名，找到对应事件的回调函数并执行。<a href="https://www.cnblogs.com/lovesong/p/5272752.html" target="_blank" rel="noopener">参考文章</a></p>
+<p>总结区别：虽然两种模式都存在订阅者和发布者（具体观察者可认为是订阅者、具体目标可认为是发布者），但是观察者模式是由具体目标调度的，而发布/订阅模式是统一由调度中心调的，所以 <strong><font color="#4995ff">观察者模式的订阅者与发布者之间是存在依赖的，而发布/订阅模式则不会。</font></strong><br><strong><font color="#4995ff">所以严格说，vue是观察者模式， 不是发布-订阅模式</font></strong>， 之后我们会讲到vue中的dep实例通过一个sub属性维护一个watcher列表，即订阅者将自己注册到发布者中，存在依赖关系，说明是观察者模式。</p>
+<h4 id="几个概念-dep-sub-watcher"><a href="#几个概念-dep-sub-watcher" class="headerlink" title="几个概念 dep/ sub/ watcher"></a>几个概念 dep/ sub/ watcher</h4><p>跟数据驱动相关几个概念是dep,sub,watcher,dep是发布者角色，watcher是订阅者角色（被通知发生变化然后进行视图更新），watcher通过sub注册到dep中。</p>
 <p>每个watcher有会对应一个vm实例，watcher可以分为3种，(具体watcher分析可以见下图)</p>
 <ol>
 <li>渲染watcher，实例化Vue的时候最后在挂载阶段会创建一个渲染watcher(渲染watcher执行构造函数的时候求值，即会调用watcher的this.getter，即实例化传入的参数updateComponent函数，完成渲染)</li>
@@ -589,7 +592,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue生命周期相关"><span class="nav-number">1.</span> <span class="nav-text">vue生命周期相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应式对象"><span class="nav-number">2.</span> <span class="nav-text">响应式对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深入分析watcher"><span class="nav-number">3.</span> <span class="nav-text">深入分析watcher</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-特点"><span class="nav-number">1.</span> <span class="nav-text">vue 特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式与相关概念"><span class="nav-number">2.</span> <span class="nav-text">设计模式与相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vue是观察者模式还是发布订阅模式？"><span class="nav-number">2.1.</span> <span class="nav-text">vue是观察者模式还是发布订阅模式？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#几个概念-dep-sub-watcher"><span class="nav-number">2.2.</span> <span class="nav-text">几个概念 dep/ sub/ watcher</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue生命周期相关"><span class="nav-number">3.</span> <span class="nav-text">vue生命周期相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应式对象"><span class="nav-number">4.</span> <span class="nav-text">响应式对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深入分析watcher"><span class="nav-number">5.</span> <span class="nav-text">深入分析watcher</span></a></li></ol></div>
             
 
           </div>
