@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="设计模式,">
+  <meta name="keywords" content="js基础,">
 
 
 
@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="创作中。。。。">
-<meta name="keywords" content="设计模式">
+<meta name="description" content="proxy 比 Object.defineProperty好在哪？可以监听 属性的添加和删除、数组索引和长度的变更，并可以支持 Map、Set、WeakMap 和 WeakSet！简单粗暴的语法： new Proxy = (target, handler)。 下面是个小栗子。 123456789101112131415161718192021222324function getProxyInsta">
+<meta name="keywords" content="js基础">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《JavaScript设计模式与开发实践》阅读笔记">
-<meta property="og:url" content="http://yoursite.com/2018/11/16/js-pattern/index.html">
+<meta property="og:title" content="es6 proxy">
+<meta property="og:url" content="http://yoursite.com/2019/03/10/es6-proxy/index.html">
 <meta property="og:site_name" content="佛罗伦萨有朵云">
-<meta property="og:description" content="创作中。。。。">
+<meta property="og:description" content="proxy 比 Object.defineProperty好在哪？可以监听 属性的添加和删除、数组索引和长度的变更，并可以支持 Map、Set、WeakMap 和 WeakSet！简单粗暴的语法： new Proxy = (target, handler)。 下面是个小栗子。 123456789101112131415161718192021222324function getProxyInsta">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-09T07:03:26.429Z">
+<meta property="og:updated_time" content="2019-03-10T13:14:28.908Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《JavaScript设计模式与开发实践》阅读笔记">
-<meta name="twitter:description" content="创作中。。。。">
+<meta name="twitter:title" content="es6 proxy">
+<meta name="twitter:description" content="proxy 比 Object.defineProperty好在哪？可以监听 属性的添加和删除、数组索引和长度的变更，并可以支持 Map、Set、WeakMap 和 WeakSet！简单粗暴的语法： new Proxy = (target, handler)。 下面是个小栗子。 123456789101112131415161718192021222324function getProxyInsta">
 
 
 
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/16/js-pattern/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/10/es6-proxy/">
 
 
 
 
 
-  <title>《JavaScript设计模式与开发实践》阅读笔记 | 佛罗伦萨有朵云</title>
+  <title>es6 proxy | 佛罗伦萨有朵云</title>
   
 
 
@@ -251,7 +251,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/16/js-pattern/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/10/es6-proxy/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="广场上的牛肚包">
@@ -268,7 +268,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">《JavaScript设计模式与开发实践》阅读笔记</h1>
+          <h1 class="post-title" itemprop="name headline">es6 proxy</h1>
         
 
         <div class="post-meta">
@@ -280,8 +280,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-16T18:20:39+08:00">
-                2018-11-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-10T21:02:26+08:00">
+                2019-03-10
               </time>
             
 
@@ -303,8 +303,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
+                  <a href="/categories/js基础/" itemprop="url" rel="index">
+                    <span itemprop="name">js基础</span>
                   </a>
                 </span>
 
@@ -340,7 +340,25 @@
       
 
       
-        <p>创作中。。。。    </p>
+        <p>proxy 比 Object.defineProperty好在哪？可以监听 <strong><font color="#4995ff">属性的添加和删除、数组索引和长度的变更，并可以支持 Map、Set、WeakMap 和 WeakSet！</font></strong><br>简单粗暴的语法： new Proxy = (target, handler)。</p>
+<p>下面是个小栗子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getProxyInstance</span> (<span class="params">obj</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> handler = &#123;</span><br><span class="line">  get:<span class="function"><span class="keyword">function</span>(<span class="params">target, key, receiver</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`getting <span class="subst">$&#123;key&#125;</span>`</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.get(target, key, receiver)</span><br><span class="line">  &#125;,</span><br><span class="line">  set:<span class="function"><span class="keyword">function</span>(<span class="params">target, key,value, receiver</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`setting <span class="subst">$&#123;key&#125;</span> to : <span class="subst">$&#123;value&#125;</span>`</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.set(target, key,value, receiver)</span><br><span class="line">  &#125;</span><br><span class="line"> &#125; </span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, handler)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="keyword">var</span> p =getProxyInstance(arr)</span><br><span class="line"></span><br><span class="line">p[<span class="number">2</span>]  <span class="comment">// getting 2 ,3</span></span><br><span class="line">p[<span class="number">2</span>]=<span class="number">300</span>  <span class="comment">// setting 2 to : 300</span></span><br><span class="line">p[<span class="number">3</span>]  <span class="comment">// getting 3, undefined</span></span><br><span class="line">p[<span class="number">3</span>]=<span class="number">400</span>  <span class="comment">// setting 3 to : 4, 400</span></span><br><span class="line">p.fruit  <span class="comment">// getting fruit, undefined </span></span><br><span class="line">p.fruit = <span class="string">'apple'</span>  <span class="comment">// setting fruit to : apple, 'apple'</span></span><br><span class="line">arr <span class="comment">//  [1, 2, 300, 4, fruit: "apple"]</span></span><br></pre></td></tr></table></figure>
+<p>详细的handler支持13种操作。<br>下面是 Proxy 支持的拦截操作一览，一共 13 种。</p>
+<ol>
+<li><strong><font color="#4995ff">get</font></strong>(target, propKey, receiver)：拦截对象属性的读取，比如proxy.foo和proxy[‘foo’]。</li>
+<li><strong><font color="#4995ff">set</font></strong>(target, propKey, value, receiver)：拦截对象属性的设置，比如proxy.foo = v或proxy[‘foo’] = v，返回一个布尔值。</li>
+<li><strong><font color="#4995ff">has</font></strong>(target, propKey)：拦截propKey in proxy的操作，返回一个布尔值。</li>
+<li>deleteProperty(target, propKey)：拦截delete proxy[propKey]的操作，返回一个布尔值。</li>
+<li>ownKeys(target)：拦截Object.getOwnPropertyNames(proxy)、<br>Object.getOwnPropertySymbols(proxy)、<br>Object.keys(proxy)、<br>for…in循环，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而Object.keys()的返回结果仅包括目标对象自身的可遍历属性。</li>
+<li>getOwnPropertyDescriptor(target, propKey)：拦截Object.getOwnPropertyDescriptor(proxy, propKey)，返回属性的描述对象。</li>
+<li>defineProperty(target, propKey, propDesc)：拦截Object.defineProperty(proxy, propKey, propDesc）、Object.defineProperties(proxy, propDescs)，返回一个布尔值。</li>
+<li>preventExtensions(target)：拦截Object.preventExtensions(proxy)，返回一个布尔值。</li>
+<li>getPrototypeOf(target)：拦截Object.getPrototypeOf(proxy)，返回一个对象。</li>
+<li>isExtensible(target)：拦截Object.isExtensible(proxy)，返回一个布尔值。</li>
+<li>setPrototypeOf(target, proto)：拦截Object.setPrototypeOf(proxy, proto)，返回一个布尔值。如果目标对象是函数，那么还有两种额外操作可以拦截。</li>
+<li><strong><font color="#4995ff">apply</font></strong>(target, object, args)：拦截 Proxy 实例作为函数调用的操作，比如proxy(…args)、proxy.call(object, …args)、proxy.apply(…)。</li>
+<li><strong><font color="#4995ff">construct</font></strong>(target, args)：拦截 Proxy 实例作为构造函数调用的操作，比如new proxy(…args)。</li>
+</ol>
 
       
     </div>
@@ -358,7 +376,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+            <a href="/tags/js基础/" rel="tag"># js基础</a>
           
         </div>
       
@@ -371,8 +389,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/12/fe-engineering/" rel="next" title="《前端工程化设计与实践》阅读笔记">
-                <i class="fa fa-chevron-left"></i> 《前端工程化设计与实践》阅读笔记
+              <a href="/2019/03/10/function-protoype-methods/" rel="next" title="实现原生js方法">
+                <i class="fa fa-chevron-left"></i> 实现原生js方法
               </a>
             
           </div>
@@ -380,10 +398,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/25/react-todo-practice/" rel="prev" title="react-todo衍生思考">
-                react-todo衍生思考 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
