@@ -54,10 +54,10 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.4">
 
 
   <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
@@ -84,6 +84,9 @@
 <meta property="og:site_name" content="佛罗伦萨有朵云">
 <meta property="og:description" content="这段时间开始结合黄奕老师的文章 Vue.js 技术揭秘 和其他网络资源开始学习vue源码，自己将一些重要过程用xmind记录下来, 一图胜千言，请读者保存图片到本地放大了看。 vue 特点vue的核心是设计一套 数据响应框架，只关心视图层。数据驱动视图，不用像几年前jQ那样手动去操作dom, 数据的改变直接映射到页面的改变（反之亦可）。vue核心思想除了数据驱动（数据的变化能引起视图的变化）还有">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/observer-pattern.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/publisher-subscriber-pattern.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/model.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/newVue.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/mount.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/dataObserve.png">
@@ -91,11 +94,12 @@
 <meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/watcherAnalysis.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/watcherCategory.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/computed.png">
-<meta property="og:updated_time" content="2019-03-09T14:27:25.782Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/test.jpg">
+<meta property="og:updated_time" content="2019-03-17T14:05:59.378Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue源码学习">
 <meta name="twitter:description" content="这段时间开始结合黄奕老师的文章 Vue.js 技术揭秘 和其他网络资源开始学习vue源码，自己将一些重要过程用xmind记录下来, 一图胜千言，请读者保存图片到本地放大了看。 vue 特点vue的核心是设计一套 数据响应框架，只关心视图层。数据驱动视图，不用像几年前jQ那样手动去操作dom, 数据的改变直接映射到页面的改变（反之亦可）。vue核心思想除了数据驱动（数据的变化能引起视图的变化）还有">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/newVue.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/01/vue-deep-learning/observer-pattern.png">
 
 
 
@@ -349,8 +353,15 @@
       
         <p>这段时间开始结合黄奕老师的文章<a href="https://ustbhuangyi.github.io/vue-analysis/" target="_blank" rel="noopener"> Vue.js 技术揭秘 </a>和其他网络资源开始学习vue源码，自己将一些重要过程用xmind记录下来, 一图胜千言，请读者保存图片到本地放大了看。</p>
 <h3 id="vue-特点"><a href="#vue-特点" class="headerlink" title="vue 特点"></a>vue 特点</h3><p>vue的核心是设计一套 <strong><font color="#4995ff">数据响应框架</font></strong>，只关心视图层。数据驱动视图，不用像几年前jQ那样手动去操作dom, 数据的改变直接映射到页面的改变（反之亦可）。<br>vue核心思想除了数据驱动（数据的变化能引起视图的变化）还有 <strong><font color="#4995ff">组件化</font></strong>。入口文件从new Vue()开始挂载根实例，然后不同组件作为根实例的子孙节点挂载在父节点（其他vue实例）上。</p>
+<hr>
+<h3 id="核心api"><a href="#核心api" class="headerlink" title="核心api"></a>核心api</h3><p>MDN官方说明，参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/definePropert" target="_blank" rel="noopener">此处</a><br>举个小栗子，看Object.defineProperty将对象的 <strong><font color="#4995ff">数据属性</font></strong>修改成 <strong><font color="#4995ff">访问器属性</font></strong>：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">a</span>:<span class="number">1</span>, <span class="attr">b</span>:<span class="number">2</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineReactive</span> (<span class="params">target, key ,val</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">Object</span>.defineProperty(target, key, &#123;</span><br><span class="line">		get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">`key:<span class="subst">$&#123;key&#125;</span> is got:<span class="subst">$&#123;val&#125;</span>`</span>)</span><br><span class="line">			<span class="keyword">return</span> val</span><br><span class="line">		&#125;,</span><br><span class="line">		set: <span class="function"><span class="keyword">function</span> (<span class="params">newVal</span>)</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(newVal !== val )&#123;</span><br><span class="line">				<span class="built_in">console</span>.log(<span class="string">`key:<span class="subst">$&#123;key&#125;</span> is set to :<span class="subst">$&#123;newVal&#125;</span>`</span>)</span><br><span class="line">				val = newVal</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'before'</span>, <span class="built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="string">'a'</span>))</span><br><span class="line"><span class="comment">// &#123;value: 1, writable: true, enumerable: true, configurable: true&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.keys(obj).forEach( <span class="function"><span class="params">item</span> =&gt;</span> defineReactive(obj, item, obj[item]))</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'after '</span>,<span class="built_in">Object</span>.getOwnPropertyDescriptor(obj, <span class="string">'a'</span>))</span><br><span class="line"><span class="comment">// after  &#123;get: ƒ, set: ƒ, enumerable: true, configurable: true&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"><span class="comment">// &#123;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 访问原有属性</span></span><br><span class="line">obj.a <span class="comment">// key:a is got:1</span></span><br><span class="line">obj.a = <span class="number">100</span>   <span class="comment">// key:a is set to :100</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除属性并新增同名属性</span></span><br><span class="line"><span class="keyword">delete</span> obj.a</span><br><span class="line">obj.a</span><br><span class="line">obj.a = <span class="number">100</span>   </span><br><span class="line">obj.a</span><br><span class="line"></span><br><span class="line"><span class="comment">// 新增属性</span></span><br><span class="line">obj.c=<span class="number">3</span></span><br><span class="line">obj.c</span><br></pre></td></tr></table></figure></p>
+<p><strong>局限性</strong>:<br> 如果用这个api 观测（或叫拦截）对象的原有属性的访问和操作，是没问题的。<br>但是对于对象的新增/删除属性的操作是拦截不到的（在vue中用$set这个api来弥补），<br>也不适用于数组，在vue中观测数组实际上是修改了数组的原型，调用数组原生api会触发类似setter函数的逻辑。<br>针对以上情况，vue3.0使用了 <strong><font color="#4995ff">proxy</font></strong>这个api进行数据观测，详见另一篇<a href="https://firenzia.github.io/2019/03/10/es6-proxy/" target="_blank" rel="noopener">博文</a></p>
+<hr>
 <h3 id="设计模式与相关概念"><a href="#设计模式与相关概念" class="headerlink" title="设计模式与相关概念"></a>设计模式与相关概念</h3><h4 id="vue是观察者模式还是发布订阅模式？"><a href="#vue是观察者模式还是发布订阅模式？" class="headerlink" title="vue是观察者模式还是发布订阅模式？"></a>vue是观察者模式还是发布订阅模式？</h4><p>观察者模式和发布订阅模式是类似的，区别在于发布是否有<strong>调度中心</strong>，观察者模式没有。<br>在观察者模式中，目标（发布者）和观察者（订阅者）是基类，目标提供维护观察者的一系列方法，观察者提供更新接口。具体观察者和具体目标继承各自的基类，然后具体观察者把自己注册到具体目标里，在具体目标发生变化时候，调度观察者的更新方法。subject维护一个observer列表，发布消息的时候遍历这个列表，调用每个observer的update方法（即订阅回调函数）；<br>在发布-订阅模式中，调度中心对外暴露发布publish 和订阅 subscribe方法，订阅方调用调度中心的subscribe方法注册事件名和事件回调函数，发布方调用调度中心的publish方法进行消息发布，调度中心publish 方法触发会去遍历已注册的事件名，找到对应事件的回调函数并执行。<a href="https://www.cnblogs.com/lovesong/p/5272752.html" target="_blank" rel="noopener">参考文章</a></p>
 <p>总结区别：虽然两种模式都存在订阅者和发布者（具体观察者可认为是订阅者、具体目标可认为是发布者），但是观察者模式是由具体目标调度的，而发布/订阅模式是统一由调度中心调的，所以 <strong><font color="#4995ff">观察者模式的订阅者与发布者之间是存在依赖的，而发布/订阅模式则不会。</font></strong><br><strong><font color="#4995ff">所以严格说，vue是观察者模式， 不是发布-订阅模式</font></strong>， 之后我们会讲到vue中的dep实例通过一个sub属性维护一个watcher列表，即订阅者将自己注册到发布者中，存在依赖关系，说明是观察者模式。</p>
+<img src="/2019/03/01/vue-deep-learning/observer-pattern.png">  
+<img src="/2019/03/01/vue-deep-learning/publisher-subscriber-pattern.png">  
+<p>在vue中实际上模型是类似这样的，<br><img src="/2019/03/01/vue-deep-learning/model.png"> </p>
 <h4 id="几个概念-dep-sub-watcher"><a href="#几个概念-dep-sub-watcher" class="headerlink" title="几个概念 dep/ sub/ watcher"></a>几个概念 dep/ sub/ watcher</h4><p>跟数据驱动相关几个概念是dep,sub,watcher,dep是发布者角色，watcher是订阅者角色（被通知发生变化然后进行视图更新），watcher通过sub注册到dep中。</p>
 <p>每个watcher有会对应一个vm实例，watcher可以分为3种，(具体watcher分析可以见下图)</p>
 <ol>
@@ -422,8 +433,21 @@
 </ol>
 <img src="/2019/03/01/vue-deep-learning/watcherCategory.png"> 
 <ol start="7">
-<li>computed属性的实现与watcher<br>此处逻辑有vue新老版本差异，黄奕老师文章中提到的是老版本的，一般我们现在用的是新版本。我是结合老师文章，自己demo调试发现其中差异。<img src="/2019/03/01/vue-deep-learning/computed.png"> </li>
+<li>computed属性的实现与watcher<br>此处逻辑有vue新老版本差异，黄奕老师文章中提到的是老版本的，一般我们现在用的是新版本。我是结合老师文章，自己demo调试发现其中差异。<img src="/2019/03/01/vue-deep-learning/computed.png"> 
+</li>
 </ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>官方版本原理解读 <a href="https://cn.vuejs.org/v2/guide/reactivity.html" target="_blank" rel="noopener">参考</a></p>
+<p>个人解读：<br>vue的数据驱动是基于观察者模式实现</p>
+<p>根据vue的生命周期，在created之前进行数据观测，利用Object.defineProperty将数据上需要观测的属性（及其子属性）修改为访问器属性并在getter函数实现依赖收集的逻辑，在setter函数实现派发通知（订阅者）的逻辑</p>
+<p>在渲染过程中（user watcher是渲染前）触发getter进行watcher依赖收集，数据发生变更触发setter，实现派发通知, 即相关watcher的run方法被调用，实现视图更新和回调执行的逻辑<br>  </p>
+<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><img src="/2019/03/01/vue-deep-learning/test.jpg"> 
+<ul>
+<li>数据对应的watcher是什么？<br>firstName 的sub有两个watcher:computed Watcher/ renderWatcher<br>lastName的sub 有两个watcher:userWatcher/ computed Watcher/renderWatcher</li>
+<li>如果在data中定义个number, 对应的subs是什么？<br>[], 空数组，因为渲染的时候number没有被访问到，没有视图依赖</li>
+<li>当点击按钮触发change事件发生什么？<br>lastName的setter被触发，传入了一个新值，对应的watcher被通知，renderWatcher负责重新渲染， userWatcher负责执行数据变更的回调</li>
+<li>接上那computed Watcher是干什么用的？<br>computed Watcher 作为桥梁关联render Watcher, 即data的变化通过computed Watcher 被渲染watcher订阅</li>
+<li>computed 重新计算，那是不是每次都重新渲染呢<br>diff算法 比对新老vnode，虚拟dom无变化，没有createElem 重新渲染。</li>
+</ul>
 
       
     </div>
@@ -592,7 +616,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-特点"><span class="nav-number">1.</span> <span class="nav-text">vue 特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式与相关概念"><span class="nav-number">2.</span> <span class="nav-text">设计模式与相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vue是观察者模式还是发布订阅模式？"><span class="nav-number">2.1.</span> <span class="nav-text">vue是观察者模式还是发布订阅模式？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#几个概念-dep-sub-watcher"><span class="nav-number">2.2.</span> <span class="nav-text">几个概念 dep/ sub/ watcher</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue生命周期相关"><span class="nav-number">3.</span> <span class="nav-text">vue生命周期相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应式对象"><span class="nav-number">4.</span> <span class="nav-text">响应式对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深入分析watcher"><span class="nav-number">5.</span> <span class="nav-text">深入分析watcher</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-特点"><span class="nav-number">1.</span> <span class="nav-text">vue 特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核心api"><span class="nav-number">2.</span> <span class="nav-text">核心api</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式与相关概念"><span class="nav-number">3.</span> <span class="nav-text">设计模式与相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vue是观察者模式还是发布订阅模式？"><span class="nav-number">3.1.</span> <span class="nav-text">vue是观察者模式还是发布订阅模式？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#几个概念-dep-sub-watcher"><span class="nav-number">3.2.</span> <span class="nav-text">几个概念 dep/ sub/ watcher</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue生命周期相关"><span class="nav-number">4.</span> <span class="nav-text">vue生命周期相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应式对象"><span class="nav-number">5.</span> <span class="nav-text">响应式对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深入分析watcher"><span class="nav-number">6.</span> <span class="nav-text">深入分析watcher</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思考题"><span class="nav-number">8.</span> <span class="nav-text">思考题</span></a></li></ol></div>
             
 
           </div>
