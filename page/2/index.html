@@ -793,7 +793,7 @@
       
         
           
-          原理async函数是对generator函数和自动执行器做了一层封装，返回一个promise。因为generator函数会返回1个迭代器对象，递归调用这个遍历器对象的next方法，上一个next的返回值value作为下一个next函数的参数传入，如果next返回值done是true说明已经遍历完，最
+          原理async函数是对generator函数和自动执行器做了一层封装，返回一个promise。因为generator函数会返回1个迭代器对象，循环调用这个遍历器对象的next方法，上一个next的value作为下一个next函数的参数传入，如果next返回值done是true说明已经遍历完，最终返回
           ...
           <!--noindex-->
           <div class="post-button text-center">
