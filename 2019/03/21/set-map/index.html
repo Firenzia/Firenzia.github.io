@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="ES6,">
 
 
 
@@ -77,22 +77,18 @@
 
 
 
-<meta name="description" content="拿出你的手机，微信扫一扫！ 效果   体会用了一周下班后的时间火速做出了个自己的小程序，没想到微信这边上线审核这么快，24小时都不到。一开始我想象中的是拿【源氏物语】作为我的小程序主题，因为不久前去了西西弗看了一个下午一本鉴赏【源氏物语】的书，非常激动，很喜欢“瞬息繁华，平安如梦”的平安时代，所以一开始我的小程序名称叫做平安如梦。后来发现这样的主题要做的很吸引对我来说非常有难度，还是选择了更通俗的">
+<meta name="description" content="先总结，  set和map 都是ES6新数据结构，都是可迭代对象。 set类似数组但没有重复成员，map类似对象，但键名可以是各种类型的值不限于字符串。 Set,Map的构造函数都可以传入一个数组 Set/Map 可以遍历，方法有 keys/values/entries, 相同方法clear/delete/has, set特有add, map特有set/get  weakSet的成员必须都是对象，">
+<meta name="keywords" content="ES6">
 <meta property="og:type" content="article">
-<meta property="og:title" content="个人小程序开发">
-<meta property="og:url" content="http://yoursite.com/2018/08/12/xcx/index.html">
+<meta property="og:title" content="set &amp; map">
+<meta property="og:url" content="http://yoursite.com/2019/03/21/set-map/index.html">
 <meta property="og:site_name" content="佛罗伦萨有朵云">
-<meta property="og:description" content="拿出你的手机，微信扫一扫！ 效果   体会用了一周下班后的时间火速做出了个自己的小程序，没想到微信这边上线审核这么快，24小时都不到。一开始我想象中的是拿【源氏物语】作为我的小程序主题，因为不久前去了西西弗看了一个下午一本鉴赏【源氏物语】的书，非常激动，很喜欢“瞬息繁华，平安如梦”的平安时代，所以一开始我的小程序名称叫做平安如梦。后来发现这样的主题要做的很吸引对我来说非常有难度，还是选择了更通俗的">
+<meta property="og:description" content="先总结，  set和map 都是ES6新数据结构，都是可迭代对象。 set类似数组但没有重复成员，map类似对象，但键名可以是各种类型的值不限于字符串。 Set,Map的构造函数都可以传入一个数组 Set/Map 可以遍历，方法有 keys/values/entries, 相同方法clear/delete/has, set特有add, map特有set/get  weakSet的成员必须都是对象，">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2018/08/12/xcx/nippon.png">
-<meta property="og:image" content="http://yoursite.com/2018/08/12/xcx/spring.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/08/12/xcx/spring_1.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/08/12/xcx/fall.jpg">
-<meta property="og:updated_time" content="2019-03-09T07:03:26.474Z">
+<meta property="og:updated_time" content="2019-03-23T06:12:41.865Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="个人小程序开发">
-<meta name="twitter:description" content="拿出你的手机，微信扫一扫！ 效果   体会用了一周下班后的时间火速做出了个自己的小程序，没想到微信这边上线审核这么快，24小时都不到。一开始我想象中的是拿【源氏物语】作为我的小程序主题，因为不久前去了西西弗看了一个下午一本鉴赏【源氏物语】的书，非常激动，很喜欢“瞬息繁华，平安如梦”的平安时代，所以一开始我的小程序名称叫做平安如梦。后来发现这样的主题要做的很吸引对我来说非常有难度，还是选择了更通俗的">
-<meta name="twitter:image" content="http://yoursite.com/2018/08/12/xcx/nippon.png">
+<meta name="twitter:title" content="set &amp; map">
+<meta name="twitter:description" content="先总结，  set和map 都是ES6新数据结构，都是可迭代对象。 set类似数组但没有重复成员，map类似对象，但键名可以是各种类型的值不限于字符串。 Set,Map的构造函数都可以传入一个数组 Set/Map 可以遍历，方法有 keys/values/entries, 相同方法clear/delete/has, set特有add, map特有set/get  weakSet的成员必须都是对象，">
 
 
 
@@ -122,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/12/xcx/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/21/set-map/">
 
 
 
 
 
-  <title>个人小程序开发 | 佛罗伦萨有朵云</title>
+  <title>set & map | 佛罗伦萨有朵云</title>
   
 
 
@@ -255,7 +251,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/12/xcx/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/21/set-map/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="广场上的牛肚包">
@@ -272,7 +268,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">个人小程序开发</h1>
+          <h1 class="post-title" itemprop="name headline">set & map</h1>
         
 
         <div class="post-meta">
@@ -284,8 +280,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-12T17:32:58+08:00">
-                2018-08-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-21T16:13:41+08:00">
+                2019-03-21
               </time>
             
 
@@ -307,8 +303,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/个人作品/" itemprop="url" rel="index">
-                    <span itemprop="name">个人作品</span>
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
                   </a>
                 </span>
 
@@ -344,34 +340,54 @@
       
 
       
-        <p>拿出你的手机，微信扫一扫！<br><img src="/2018/08/12/xcx/nippon.png"></p>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><img src="/2018/08/12/xcx/spring.jpg">
-<img src="/2018/08/12/xcx/spring_1.jpg">
-<img src="/2018/08/12/xcx/fall.jpg">
-<h3 id="体会"><a href="#体会" class="headerlink" title="体会"></a>体会</h3><p>用了一周下班后的时间火速做出了个自己的小程序，没想到微信这边上线审核这么快，24小时都不到。一开始我想象中的是拿【源氏物语】作为我的小程序主题，因为不久前去了西西弗看了一个下午一本鉴赏【源氏物语】的书，非常激动，很喜欢“瞬息繁华，平安如梦”的平安时代，所以一开始我的小程序名称叫做平安如梦。后来发现这样的主题要做的很吸引对我来说非常有难度，还是选择了更通俗的主题，还是和日本有关。而且参考很多小程序都有首页轮播，那我就想到了做个四季主题。</p>
-<p>春天的樱花，夏天的花火，秋天的红枫，冬天的白雪，日本的四季流转，是一首很美的风物诗。</p>
-<p>我简直是勤劳的百度搬运工，精美的图片花了我好大功夫筛选。最坑的是要用网络图片，我一开始三四十张图片从日本网站下下来（怕直接访问网速慢），图片放在了QQ空间，结果QQ不允许外链，除非升级成黄钻用户，然后我再找了什么七牛云,注册还要上传自己手拿身份证照片，真是醉了，不知道要审核多久，然后我又找了新浪云相册，结果貌似可以，然后我再手动把三四十张图片上传上去，结果发现有些图片模糊了，原来新浪云相册同一张图片会保存不同像素，我又得一遍遍筛查改url…因为图片的事情，花了不少时间。。说多都是泪。。。。</p>
-<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>第三方api<br>和风天气<br>百度地图</p>
-<h3 id="开发场景"><a href="#开发场景" class="headerlink" title="开发场景"></a>开发场景</h3><ul>
-<li>页面跳转</li>
-<li>带参数跳转</li>
-<li>图片懒加载</li>
+        <p>先总结，</p>
+<ul>
+<li>set和map 都是ES6新数据结构，都是可迭代对象。</li>
+<li>set类似数组但没有重复成员，map类似对象，但键名可以是各种类型的值不限于字符串。</li>
+<li>Set,Map的构造函数都可以传入一个数组</li>
+<li><p>Set/Map 可以遍历，方法有 keys/values/entries, 相同方法clear/delete/has, set特有add, map特有set/get</p>
+</li>
+<li><p>weakSet的成员必须都是对象，weakMap的键名必须都是对象，这些对象都是弱引用，不在js垃圾回收机制中，即外部对象的其他引用被解除后，这些成员也会跟着消失，内存被回收。</p>
+</li>
+<li>weakSet/weakMap不能遍历，没有size属性</li>
 </ul>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
-<li>新版本小程序发布的限制为2M，一般都是图片最占空间，所以尽量使用网络图片</li>
+<hr>
+<p>Set</p>
+<ul>
+<li>成员唯一、无序且不重复</li>
+<li>[value, value]，键值与键名是一致的（或者说只有键值，没有键名）</li>
+<li>可以遍历，方法有：add、delete、has</li>
 </ul>
-<h3 id="小程序当前限制"><a href="#小程序当前限制" class="headerlink" title="小程序当前限制"></a>小程序当前限制</h3><ul>
-<li>小程序里的二维码图片不能长按识别，只能保存到本地，在微信打开再长按识别</li>
-<li>页面最多5级页面</li>
-<li>小程序仍然使用 WebView 渲染，并非原生渲染。（部分原生）</li>
-<li>服务端接口返回的头无法执行，比如：Set-Cookie</li>
-<li>依赖浏览器环境的 JS 库不能使用。</li>
-<li>不能使用 npm，但是可以自搭构建工具或者使用 mpvue。（未来官方有计划支持）</li>
-<li>不能使用 ES7，可以自己用babel+webpack自搭或者使用 mpvue。</li>
-<li>不支持使用自己的字体（未来官方计划支持）。</li>
-<li>可以用 base64 的方式来使用 iconfont。</li>
-<li>小程序不能发朋友圈（可以通过保存图片到本地，发图片到朋友前。二维码可以使用B接口）。</li>
+<p>WeakSet</p>
+<ul>
+<li>成员都是对象</li>
+<li>成员都是弱引用，可以被垃圾回收机制回收，可以用来保存DOM节点，不容易造成内存泄漏</li>
+<li>不能遍历，方法有add、delete、has</li>
 </ul>
+<p>Map</p>
+<ul>
+<li>本质上是键值对的集合，类似集合</li>
+<li>可以遍历，方法很多可以跟各种数据格式转换</li>
+</ul>
+<p>WeakMap</p>
+<ul>
+<li>只接受对象作为键名（null除外），不接受其他类型的值作为键名</li>
+<li>键名是弱引用，键值可以是任意的，键名所指向的对象可以被垃圾回收，此时键名是无效的</li>
+<li>不能遍历，方法有get、set、has、delete</li>
+</ul>
+<h3 id="Set使用场景"><a href="#Set使用场景" class="headerlink" title="Set使用场景"></a>Set使用场景</h3><p>数组去重<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter1</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> [...new <span class="built_in">Set</span>(arr)]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filter2</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(arr))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>并集（Union）、交集（Intersect）和差集（Difference）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUnion</span>(<span class="params">set1, set2</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Set</span>([...set1,...set2])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getIntersect</span>(<span class="params">set1, set2</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> [...set1].filter(<span class="function">(<span class="params">x</span>)=&gt;</span>set2.has(x))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDifference</span>(<span class="params">set1, set2</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> [...set1,...set2].filter(<span class="function">(<span class="params">x</span>)=&gt;</span> !set2.has(x)|| !set1.has(x))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="WeakSet"><a href="#WeakSet" class="headerlink" title="WeakSet"></a>WeakSet</h3><p>首先，WeakSet 的成员只能是对象，而不能是其他类型的值。<br>其次，WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用，也就是说，如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存，不考虑该对象还存在于 WeakSet 之中。</p>
+<p>WeakSet 与 Set 在 API 上的区别主要是两个，一是没有遍历操作（即没有keys()、values()和entries()方法），也没有size属性。<br>因此，WeakMap只有四个方法可用：add()、has()、delete()。</p>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>由上可知，Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键。这就解决了同名属性碰撞（clash）的问题，我们扩展别人的库的时候，如果使用对象作为键名，就不用担心自己的属性与原作者的属性同名。</p>
+<h3 id="WeakMap-特点-amp-使用场景"><a href="#WeakMap-特点-amp-使用场景" class="headerlink" title="WeakMap 特点 &amp; 使用场景"></a>WeakMap 特点 &amp; 使用场景</h3><p>因此，只要所引用的对象的其他引用都被清除，垃圾回收机制就会释放该对象所占用的内存。也就是说，一旦不再需要，WeakMap 里面的键名对象和所对应的键值对会自动消失，不用手动删除引用<br>注意，WeakMap 弱引用的只是键名，而不是键值。键值依然是正常引用。</p>
+<p>WeakMap与Map的区别有两点。</p>
+<ul>
+<li>WeakMap只接受对象作为键名（null除外）</li>
+<li>WeakMap的键名所指向的对象，不计入垃圾回收机制, 都是弱引用。只要所引用的对象的其他引用都被清除，垃圾回收机制就会释放该对象所占用的内存。也就是说，一旦不再需要，WeakMap 里面的键名对象和所对应的键值对会自动消失，不用手动删除引用</li>
+</ul>
+<p>WeakMap的设计目的在于，有时我们想在某个对象上面存放一些数据，但是这会形成对于这个对象的引用。一旦不再需要这个对象，我们就必须手动删除这个引用, 设置为null。如果你要往对象上添加数据，又不想干扰垃圾回收机制，就可以使用 WeakMap。</p>
+<p>WeakMap 与 Map 在 API 上的区别主要是两个，一是没有遍历操作（即没有keys()、values()和entries()方法），也没有size属性。<br>因此，WeakMap只有四个方法可用：get()、set()、has()、delete()。</p>
 
       
     </div>
@@ -387,6 +403,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/ES6/" rel="tag"># ES6</a>
+          
+        </div>
+      
 
       
       
@@ -396,8 +418,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/15/async-await/" rel="next" title="async-await- generator">
-                <i class="fa fa-chevron-left"></i> async-await- generator
+              <a href="/2019/03/13/promise/" rel="next" title="promise深入学习">
+                <i class="fa fa-chevron-left"></i> promise深入学习
               </a>
             
           </div>
@@ -406,8 +428,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/25/vue/" rel="prev" title="vue学习纪录(一)">
-                vue学习纪录(一) <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/22/arry-algorithm-question-issue/" rel="prev" title="编程题（包括算法）">
+                编程题（包括算法） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -540,7 +562,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#效果"><span class="nav-number">1.</span> <span class="nav-text">效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#体会"><span class="nav-number">2.</span> <span class="nav-text">体会</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据"><span class="nav-number">3.</span> <span class="nav-text">数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发场景"><span class="nav-number">4.</span> <span class="nav-text">开发场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">5.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小程序当前限制"><span class="nav-number">6.</span> <span class="nav-text">小程序当前限制</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Set使用场景"><span class="nav-number">1.</span> <span class="nav-text">Set使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WeakSet"><span class="nav-number">2.</span> <span class="nav-text">WeakSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">3.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WeakMap-特点-amp-使用场景"><span class="nav-number">4.</span> <span class="nav-text">WeakMap 特点 &amp; 使用场景</span></a></li></ol></div>
             
 
           </div>
