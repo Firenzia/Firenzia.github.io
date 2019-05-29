@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Chapter of HTTPhttpshttps对比http?http传输信息是明文，这个信息有可能被某个中间人恶意截获甚至篡改, 不够安全 直接使用对称加密的问题？解决方法？第一次约定加密方式和密钥的通信仍然是明文，如果第一次通信就已经被拦截了，那么密钥就会泄露给中间人，中间人仍然可以解密后续所有的通信内容。用非对称加密，为密钥的传输做一层额外的保护。非对称加密的一组秘钥对中，包含一个公钥和一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些我要知道的@#*￥……&amp;*http&#x2F;Tcp的事儿">
+<meta property="og:url" content="http://yoursite.com/2019/03/27/http/index.html">
+<meta property="og:site_name" content="佛罗伦萨有朵云">
+<meta property="og:description" content="Chapter of HTTPhttpshttps对比http?http传输信息是明文，这个信息有可能被某个中间人恶意截获甚至篡改, 不够安全 直接使用对称加密的问题？解决方法？第一次约定加密方式和密钥的通信仍然是明文，如果第一次通信就已经被拦截了，那么密钥就会泄露给中间人，中间人仍然可以解密后续所有的通信内容。用非对称加密，为密钥的传输做一层额外的保护。非对称加密的一组秘钥对中，包含一个公钥和一">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2019/03/27/http/http_history.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/03/27/http/head_blocking.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/27/http/disconnect.png">
+<meta property="og:updated_time" content="2019-03-28T09:42:30.399Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="那些我要知道的@#*￥……&amp;*http&#x2F;Tcp的事儿">
+<meta name="twitter:description" content="Chapter of HTTPhttpshttps对比http?http传输信息是明文，这个信息有可能被某个中间人恶意截获甚至篡改, 不够安全 直接使用对称加密的问题？解决方法？第一次约定加密方式和密钥的通信仍然是明文，如果第一次通信就已经被拦截了，那么密钥就会泄露给中间人，中间人仍然可以解密后续所有的通信内容。用非对称加密，为密钥的传输做一层额外的保护。非对称加密的一组秘钥对中，包含一个公钥和一">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/27/http/http_history.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/27/http/">
+
+
+
+
+
+  <title>那些我要知道的@#*￥……&*http/Tcp的事儿 | 佛罗伦萨有朵云</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">佛罗伦萨有朵云</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/27/http/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="广场上的牛肚包">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="佛罗伦萨有朵云">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">那些我要知道的@#*￥……&*http/Tcp的事儿</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-27T08:29:06+08:00">
+                2019-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Chapter-of-HTTP"><a href="#Chapter-of-HTTP" class="headerlink" title="Chapter of HTTP"></a>Chapter of HTTP</h2><h3 id="https"><a href="#https" class="headerlink" title="https"></a>https</h3><p>https对比http?<br>http传输信息是明文，这个信息有可能被某个中间人恶意截获甚至篡改, 不够安全</p>
+<p>直接使用对称加密的问题？解决方法？<br>第一次约定加密方式和密钥的通信仍然是明文，如果第一次通信就已经被拦截了，那么密钥就会泄露给中间人，中间人仍然可以解密后续所有的通信内容。<br>用非对称加密，为密钥的传输做一层额外的保护。非对称加密的一组秘钥对中，包含一个公钥和一个私钥。明文既可以用公钥加密，用私钥解密；也可以用私钥加密，用公钥解密。</p>
+<p>核心：<strong><font color="#83bbec">加密了密钥传输的过程</font></strong><br>原理：<strong><font color="#83bbec">服务端使用非对称加密获得两方通信密钥</font></strong><br>过程：服务端有一套公钥私钥，将公钥key1发送给客户端，客户端将两方通信密钥key2用key1加密后发送给服务端，服务端再用公钥key1对应的私钥去机密，获得key2。<br>问题： 这个过程中key1可能被第三方拦截，第三方有自己的一套公钥私钥，将key1替换成第三方的key3，再传递给客户端，<br>      客户端用key3加密key2，然后又被第三方拦截，第三方用自己key3对应的私钥解密获得key2, 然后又用key3加密key2发送给服务端，<br>      客户端服务端仍然像正常过程用key2加密解密通信内容，但第三方已经拿到key2, 可以窃听到通信内容。<br>解决方案：引入第三方证书<br>过程：服务端不再直接发送公钥key1, 而是发送证书，客户端验证证书真伪后解密获得公钥key1。</p>
+<p>详细过程： </p>
+<ol>
+<li>服务端申请证书，证书机构颁发证书。证书颁发机构自己也有一对公钥私钥。机构利用自己的私钥来加密Key1，并且通过服务端网址等信息生成一个证书签名，证书签名同样经过机构的私钥加密</li>
+<li>服务端发送证书</li>
+<li>客户端用本地机构公钥解密获得证书签名，自己生成本地签名对比解密证书签名，判定真伪。<br>各大浏览器和操作系统已经维护了所有权威证书机构的名称和公钥。所以小灰只需要知道是哪个机构颁布的证书，就可以从本地找到对应的机构公钥，解密出证书签名。</li>
+<li>客户端判定证书是真的，解密获得客户端公钥key1。</li>
+<li>像之前一样，客户端发送key1加密过的key2。</li>
+<li>服务端再用公钥key1对应的私钥去机密，获得key2</li>
+<li>双方开始用Key2进行 <strong><font color="#83bbec">对称加密</font></strong>的通信</li>
+</ol>
+<p>第三方能伪造证书吗？<br><strong><font color="#83bbec">不能，证书的签名是由服务端网址等信息生成的，并且经过机构私钥加密，中间人无法篡改。</font></strong></p>
+<p>参考 <a href="https://zhuanlan.zhihu.com/p/57142784" target="_blank" rel="noopener">漫画：什么是 HTTPS 协议？</a></p>
+<hr>
+<h3 id="http发展史及版本对比"><a href="#http发展史及版本对比" class="headerlink" title="http发展史及版本对比"></a>http发展史及版本对比</h3><img src="/2019/03/27/http/http_history.jpeg"> 
+<table>
+<thead>
+<tr>
+<th style="text-align:center">版本</th>
+<th style="text-align:center">连接特点</th>
+<th style="text-align:center">请求特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">http 1.0</td>
+<td style="text-align:center">连接不复用</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">http 1.1</td>
+<td style="text-align:center">连接复用</td>
+<td style="text-align:center">请求是 <strong><font color="#83bbec">串行</font></strong></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">持久化连接</td>
+<td style="text-align:center">不能顺次发多个请求</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">管线化</td>
+<td style="text-align:center"><strong><font color="#83bbec">可以顺次发多个请求</font></strong></td>
+</tr>
+<tr>
+<td style="text-align:center">http2</td>
+<td style="text-align:center">多路复用,解决 <strong><font color="#83bbec">队头阻塞问题</font></strong></td>
+<td style="text-align:center">请求是 <strong><font color="#83bbec">并行</font></strong>的</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>http2 vs http1.x<br>效率高：</p>
+<ul>
+<li>多路复用<br><strong><font color="#83bbec">多路复用代替了HTTP1.x的序列和阻塞机制</font></strong><br>在HTTP1.x中，如果想并发多个请求，必须使用多个 TCP 链接，且浏览器为了控制资源，还会对单个域名有 6-8个的TCP链接请求限制<br>HTTP2中：<br>同域名下所有通信都在单个连接上完成，消除了因多个 TCP 连接而带来的延时和内存消耗。<br>单个连接上可以并行交错的请求和响应，之间互不干扰</li>
+<li>二进制协议（信息解析更快）</li>
+<li>头部压缩</li>
+<li>服务端推送</li>
+</ul>
+<p><br><br>在 HTTP/2 中，有两个非常重要的概念，分别是帧（frame）和流（stream）。<br>帧代表着最小的数据单位，每个帧会标识出该帧属于哪个流，流也就是多个帧组成的数据流。<br>多路复用，就是在一个 TCP 连接中可以存在多条流。换句话说，也就是可以发送多个请求，<strong><font color="#83bbec">对端可以通过帧中的标识知道属于哪个请求</font></strong>。通过这个技术，可以避免 HTTP 旧版本中的队头阻塞问题，极大的提高传输性能。</p>
+<p>参考 <a href="https://cloud.tencent.com/developer/news/334034" target="_blank" rel="noopener">HTTP2.0，HTTP1.1，HTTP1.0三者在通性性能上的优化方法</a></p>
+<p><br><br><strong><font color="orange"> ?? 当我们在说队头阻塞，我们在说什么</font></strong><br><img src="/2019/03/27/http/head_blocking.jpg"> </p>
+<p>pipelining在接收response返回时，也必须依顺序接收，如果前一个请求遇到了阻塞，后面的请求即使已经处理完毕了，仍然需要等待阻塞的请求处理完毕。这种情况就如图中第三种，第一个请求阻塞后，后面的请求都需要等待，这也就是队头阻塞(Head of line blocking)。<br>为了解决上述阻塞问题，http2中提出了多路复用(Multiplexing)技术，Multiplexing是通信和计算机网络领域的专业名词。http2中将多个请求复用同一个tcp链接中，将一个TCP连接分为若干个流（Stream），每个流中可以传输若干消息（Message），每个消息由若干最小的二进制帧（Frame）组成。也就是将每个request-response拆分为了细小的二进制帧Frame，这样即使一个请求被阻塞了，也不会影响其他请求，如图中第四种情况所示。</p>
+<p>参考 <a href="https://www.jianshu.com/p/450cc7320e30" target="_blank" rel="noopener">http中的队头阻塞（Head of line blocking）多路复用（Multiplexing）</a></p>
+<hr>
+<h3 id="状态码和报文"><a href="#状态码和报文" class="headerlink" title="状态码和报文"></a>状态码和报文</h3><p><strong>301 vs 302 区别</strong><br>301永久重定向，302临时重定向<br>301：<br>旧地址A的资源已经被永久地移除了（这个资源不可访问了），<br>搜索引擎在抓取新内容的同时也将旧的网址交换为重定向之后的网址<br>301比较常用的场景是使用 <strong><font color="#83bbec">域名跳转</font></strong>。比如，我们访问 <a href="http://www.baidu.com" target="_blank" rel="noopener">http://www.baidu.com</a> 会跳转到 <a href="https://www.baidu.com" target="_blank" rel="noopener">https://www.baidu.com</a></p>
+<p>302：302表示旧地址A的资源还在（仍然可以访问），这个重定向只是临时地从旧地址A跳转到地址B，搜索引擎会抓取新的内容而保存旧的网址。<br>比如未登陆的用户访问用户中心重定向到登录页面。</p>
+<p>使用301跳转的场景：<br>1）域名到期不想续费（或者发现了更适合网站的域名），想换个域名。<br>2）在搜索引擎的搜索结果中出现了不带www的域名，而带www的域名却没有收录，这个时候可以用301重定向来告诉搜索引擎我们目标的域名是哪一个。<br>3）空间服务器不稳定，换空间的时候。</p>
+<p>使用302跳转的场景：<br>        –尽量使用301跳转！—网址劫持！<br>从网站A（网站比较烂）上做了一个302跳转到网站B（搜索排名很靠前），这时候有时搜索引擎会使用网站B的内容，但却收录了网站A的地址，这样在不知不觉间，网站B在为网站A作贡献，网站A的排名就靠前了。 </p>
+<hr>
+<h2 id="Chapter-of-TCP"><a href="#Chapter-of-TCP" class="headerlink" title="Chapter of TCP"></a>Chapter of TCP</h2><h3 id="TCP-vs-UDP"><a href="#TCP-vs-UDP" class="headerlink" title="TCP vs UDP?"></a>TCP vs UDP?</h3><p>应用层 HTTP/FTP/DNS<br>       SSL<br>传输层  TCP/UDP<br>网络层  IP/APR<br>链路层</p>
+<p>UDP</p>
+<ol>
+<li>不用建立连接</li>
+<li>不会对数据报文进行任何拆分和拼接操作</li>
+<li>不保证有序且不丢失的传递到对端</li>
+<li>没有任何控制流量的算法<br>不可靠，但是简单高效，适用于实时性要求高场景</li>
+</ol>
+<p>TCP 基本是和 UDP 反着来，建立连接断开连接都需要先需要进行握手。在传输数据的过程中，通过各种算法保证数据的可靠性，当然带来的问题就是相比 UDP 来说不那么的高效。</p>
+<h3 id="TCP连接断开的握手"><a href="#TCP连接断开的握手" class="headerlink" title="TCP连接断开的握手"></a>TCP连接断开的握手</h3><h4 id="连接三次握手"><a href="#连接三次握手" class="headerlink" title="连接三次握手"></a>连接三次握手</h4><p>a.客户端发送SYN给服务端<br>b.服务端收到后发送ACK+SYN给客户端<br>c.客户端发送ACK给服务端，完成连接</p>
+<p><strong><font color="orange"> ?? 思考： 为啥需要三次连接</font></strong><br>为了防止已经失效的连接请求报文段突然又传到服务端，因而产生错误</p>
+<p>一端(client)A发出去的第一个连接请求报文并没有丢失，而是因为某些未知的原因在某个网络节点上发生滞留，导致延迟到连接释放以后的某个时间才到达另一端(server)B。本来这是一个早已失效的报文段，但是B收到此失效的报文之后，会误认为是A再次发出的一个新的连接请求，于是B端就向A又发出确认报文，表示同意建立连接。如果不采用“三次握手”，那么只要B端发出确认报文就会认为新的连接已经建立了，但是A端并没有发出建立连接的请求，因此不会去向B端发送数据，B端没有收到数据就会一直等待，这样B端就会白白浪费掉很多资源。如果采用“三次握手”的话就不会出现这种情况，B端收到一个过时失效的报文段之后，向A端发出确认，此时A并没有要求建立连接，所以就不会向B端发送确认，这个时候B端也能够知道连接没有建立。 </p>
+<h4 id="断开四次握手"><a href="#断开四次握手" class="headerlink" title="断开四次握手"></a>断开四次握手</h4><img src="/2019/03/27/http/disconnect.png"> 
+<p>服务端和客户端都要发送ACK和FIN<br>a.A-B发送FIN<br>b.B-A 发送ACK<br>c.B-A 发送FIN<br>d.A-B发送ACK</p>
+<p><strong><font color="orange"> ?? 思考，为什么连接3次，断开4次</font></strong><br>本质的原因是tcp是全双公的，要实现可靠的连接关闭，一方发出结束报文，另一方还可以继续发送数据，得双方都发送了结束报文FIN和应答ACK。</p>
+<p><strong><font color="orange"> 为什么上图中的A在TIME-WAIT状态必须等待2MSL时间呢？</font></strong><br>第一，为了保证A发送的最后一个ACK报文能够到达B。这个ACK报文段有可能丢失，因而使处在LAST-ACK状态的B收不到对已发送的FIN+ACK报文段的确认。B会超时重传这个FIN+ACK报文段，而A就能在2MSL时间内收到这个重传的FIN+ACK报文段。如果A在TIME-WAIT状态不等待一段时间，而是在发送完ACK报文段后就立即释放连接，就无法收到B重传的FIN+ACK报文段，因而也不会再发送一次确认报文段。这样，B就无法按照正常的步骤进入CLOSED状态。<br>第二，A在发送完ACK报文段后，再经过2MSL时间，就可以使本连接持续的时间所产生的所有报文段都从网络中消失。这样就可以使下一个新的连接中不会出现这种旧的连接请求的报文段。 </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/22/arry-algorithm-question-issue/" rel="next" title="编程题（包括算法）">
+                <i class="fa fa-chevron-left"></i> 编程题（包括算法）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">广场上的牛肚包</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-of-HTTP"><span class="nav-number">1.</span> <span class="nav-text">Chapter of HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#https"><span class="nav-number">1.1.</span> <span class="nav-text">https</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http发展史及版本对比"><span class="nav-number">1.2.</span> <span class="nav-text">http发展史及版本对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态码和报文"><span class="nav-number">1.3.</span> <span class="nav-text">状态码和报文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-of-TCP"><span class="nav-number">2.</span> <span class="nav-text">Chapter of TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-vs-UDP"><span class="nav-number">2.1.</span> <span class="nav-text">TCP vs UDP?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP连接断开的握手"><span class="nav-number">2.2.</span> <span class="nav-text">TCP连接断开的握手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#连接三次握手"><span class="nav-number">2.2.1.</span> <span class="nav-text">连接三次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#断开四次握手"><span class="nav-number">2.2.2.</span> <span class="nav-text">断开四次握手</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">广场上的牛肚包</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
