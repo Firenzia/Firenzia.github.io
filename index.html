@@ -616,7 +616,7 @@
       
         
           
-          题目斐波那契数列1234567891011121314151617181920212223// 性能最差function Fibonacci (n) &#123;  if ( n &lt;= 1 ) &#123;return 1&#125;;  return Fibonacci(n - 1) + F
+          题目斐波那契数列只有不再用到外层函数的内部变量，内层函数的调用帧才会取代外层函数的调用帧，否则就无法进行“尾调用优化”1234567891011121314151617181920212223// 性能最差(太深调用栈)function Fibonacci (n) &#123;  if ( n &l
           ...
           <!--noindex-->
           <div class="post-button text-center">
