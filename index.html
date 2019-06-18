@@ -766,7 +766,7 @@
       
         
           
-          题目高阶记忆函数12345678910function memorize(fn)&#123;  var cache = &#123;&#125;  return function()&#123;    var key = Array.of(arguments).join('-')    if(key
+          题目柯里化实现add函数123456789101112131415function add()&#123;  let args = [...arguments]  let innerAdd = function()&#123;    args.push(...arguments)    return
           ...
           <!--noindex-->
           <div class="post-button text-center">
