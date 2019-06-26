@@ -81,17 +81,17 @@
 <meta name="keywords" content="js基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="promise深入学习">
-<meta property="og:url" content="http://yoursite.com/2019/03/13/promise/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/03/27/promise/index.html">
 <meta property="og:site_name" content="佛罗伦萨有朵云">
 <meta property="og:description" content="浅谈理解Promise A+(手绘简略版)详细参考：https://promisesaplus.com/   promise本质 の 个人理解一个promise实例可以看作一个容器，里面会维护状态，异步操作结果，异步操作后成功回调， 异步操作后失败回调  status: string  内部状态（可能是pending, resolved, rejected） value: any  异步操作的结果">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2019/03/13/promise/promiseAPlus.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/03/13/promise/promise.png">
-<meta property="og:updated_time" content="2019-06-25T14:59:31.480Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/27/promise/promiseAPlus.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/27/promise/promise.png">
+<meta property="og:updated_time" content="2019-06-26T16:32:53.543Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="promise深入学习">
 <meta name="twitter:description" content="浅谈理解Promise A+(手绘简略版)详细参考：https://promisesaplus.com/   promise本质 の 个人理解一个promise实例可以看作一个容器，里面会维护状态，异步操作结果，异步操作后成功回调， 异步操作后失败回调  status: string  内部状态（可能是pending, resolved, rejected） value: any  异步操作的结果">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/13/promise/promiseAPlus.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/27/promise/promiseAPlus.jpg">
 
 
 
@@ -121,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/13/promise/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/27/promise/">
 
 
 
@@ -254,7 +254,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/13/promise/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/27/promise/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="广场上的牛肚包">
@@ -283,8 +283,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-13T14:22:31+08:00">
-                2019-03-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-27T14:22:31+08:00">
+                2019-03-27
               </time>
             
 
@@ -343,13 +343,13 @@
       
 
       
-        <h1 id="浅谈理解"><a href="#浅谈理解" class="headerlink" title="浅谈理解"></a>浅谈理解</h1><h2 id="Promise-A-手绘简略版"><a href="#Promise-A-手绘简略版" class="headerlink" title="Promise A+(手绘简略版)"></a>Promise A+(手绘简略版)</h2><p>详细参考：<a href="https://promisesaplus.com/" target="_blank" rel="noopener">https://promisesaplus.com/</a><br><img src="/2019/03/13/promise/promiseAPlus.jpg">  </p>
+        <h1 id="浅谈理解"><a href="#浅谈理解" class="headerlink" title="浅谈理解"></a>浅谈理解</h1><h2 id="Promise-A-手绘简略版"><a href="#Promise-A-手绘简略版" class="headerlink" title="Promise A+(手绘简略版)"></a>Promise A+(手绘简略版)</h2><p>详细参考：<a href="https://promisesaplus.com/" target="_blank" rel="noopener">https://promisesaplus.com/</a><br><img src="/2019/03/27/promise/promiseAPlus.jpg">  </p>
 <h2 id="promise本质-の-个人理解"><a href="#promise本质-の-个人理解" class="headerlink" title="promise本质 の 个人理解"></a>promise本质 の 个人理解</h2><p>一个promise实例可以看作一个容器，里面会维护状态，异步操作结果，异步操作后成功回调， 异步操作后失败回调</p>
 <ul>
 <li><strong><font color="#7499e1">status: string </font></strong> 内部状态（可能是pending, resolved, rejected）</li>
 <li><strong><font color="#7499e1">value: any </font></strong> 异步操作的结果</li>
 <li><strong><font color="#7499e1">succCb: Array[Function]</font></strong> 成功的回调函数数组，通过调用then的时候进行绑定添加，在状态变成resolve的时候执行</li>
-<li><strong><font color="#7499e1">failCb: Array[Function] </font></strong> 失败的回调函数数组，通过调用then的时候进行绑定添加，在状态变成reject的时候执行<br><br><img src="/2019/03/13/promise/promise.png">  
+<li><strong><font color="#7499e1">failCb: Array[Function] </font></strong> 失败的回调函数数组，通过调用then的时候进行绑定添加，在状态变成reject的时候执行<br><br><img src="/2019/03/27/promise/promise.png">  
 </li>
 </ul>
 <h2 id="Promise构造函数执行发生了什么"><a href="#Promise构造函数执行发生了什么" class="headerlink" title="Promise构造函数执行发生了什么?"></a>Promise构造函数执行发生了什么?</h2><p>Promise构造函数，  <strong><font color="red">内部定义一个resolve方法 和reject方法</font></strong>，用于修改promise实例的状态/值，和执行回调函数，<br>构造函数执行的逻辑是，将预先定义好的这两个方法作为参数传入去调用实例化promise传入的参数，即函数fn，即 <strong><font color="red">实例化的时候执行fn(resolve, reject)</font></strong><br>fn函数中有用户自定义逻辑，在不同时机调用resolve方法或reject方法修改容器内部状态和值等。<br><br></p>
@@ -468,8 +468,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/10/es6-proxy/" rel="next" title="es6 proxy">
-                <i class="fa fa-chevron-left"></i> es6 proxy
+              <a href="/2019/03/22/arry-algorithm-question-issue/" rel="next" title="编程题（包括算法）">
+                <i class="fa fa-chevron-left"></i> 编程题（包括算法）
               </a>
             
           </div>
@@ -478,8 +478,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/21/set-map/" rel="prev" title="set & map">
-                set & map <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/01/vue-deep-learning/" rel="prev" title="vue源码学习">
+                vue源码学习 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
