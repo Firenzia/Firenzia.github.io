@@ -87,7 +87,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/03/13/http/http_history.jpeg">
 <meta property="og:image" content="http://yoursite.com/2019/03/13/http/head_blocking.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/03/13/http/disconnect.png">
-<meta property="og:updated_time" content="2019-06-26T16:33:00.165Z">
+<meta property="og:updated_time" content="2019-06-29T14:59:40.006Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="那些@#*￥……&amp;*http&#x2F;Tcp的事儿">
 <meta name="twitter:description" content="Chapter of HTTPhttpshttps对比http?http传输信息是明文，这个信息有可能被某个中间人恶意截获甚至篡改, 不够安全 直接使用对称加密的问题？解决方法？第一次约定加密方式和密钥的通信仍然是明文，如果第一次通信就已经被拦截了，那么密钥就会泄露给中间人，中间人仍然可以解密后续所有的通信内容。用非对称加密，为密钥的传输做一层额外的保护。非对称加密的一组秘钥对中，包含一个公钥和一">
@@ -326,14 +326,14 @@
 <p>核心：<strong><font color="#83bbec">加密了密钥传输的过程</font></strong><br>原理：<strong><font color="#83bbec">服务端使用非对称加密获得两方通信密钥</font></strong><br>过程：服务端有一套公钥私钥，将公钥key1发送给客户端，客户端将两方通信密钥key2用key1加密后发送给服务端，服务端再用公钥key1对应的私钥去机密，获得key2。<br>问题： 这个过程中key1可能被第三方拦截，第三方有自己的一套公钥私钥，将key1替换成第三方的key3，再传递给客户端，<br>      客户端用key3加密key2，然后又被第三方拦截，第三方用自己key3对应的私钥解密获得key2, 然后又用key3加密key2发送给服务端，<br>      客户端服务端仍然像正常过程用key2加密解密通信内容，但第三方已经拿到key2, 可以窃听到通信内容。<br>解决方案：引入第三方证书<br>过程：服务端不再直接发送公钥key1, 而是发送证书，客户端验证证书真伪后解密获得公钥key1。</p>
 <p>详细过程： </p>
 <ol>
-<li>服务端申请证书，证书机构颁发证书。证书颁发机构自己也有一对公钥私钥。机构利用自己的私钥来加密Key1，并且通过服务端网址等信息生成一个证书签名，证书签名同样经过机构的私钥加密</li>
-<li>服务端发送证书</li>
-<li>客户端用本地机构公钥解密获得证书签名，自己生成本地签名对比解密证书签名，判定真伪。<br>各大浏览器和操作系统已经维护了所有权威证书机构的名称和公钥。所以小灰只需要知道是哪个机构颁布的证书，就可以从本地找到对应的机构公钥，解密出证书签名。</li>
-<li>客户端判定证书是真的，解密获得客户端公钥key1。</li>
-<li>像之前一样，客户端发送key1加密过的key2。</li>
-<li>服务端再用公钥key1对应的私钥去机密，获得key2</li>
-<li>双方开始用Key2进行 <strong><font color="#83bbec">对称加密</font></strong>的通信</li>
+<li>客户端发送client hello,包括一个随机数和协议和加密方式</li>
+<li>服务端向客户端发起server hello, 包括一个随机数和服务端筛选后的协议和加密方式和证书。</li>
+<li>客户端校验证书。证书中包含了服务端公钥，证书签名。证书签名是被证书私钥加密的，客户端有证书公钥，客户端用证书共钥揭秘签名得到摘要1，使用认证机构同样的摘要算法对证书源文件计算得到摘要2，对比摘要1和摘要2，相同说明证书可靠，取出服务端公钥。<br>客户端生成一个随机数，通过服务端公钥加密发送给服务端。<font color="#83bbec">这个也是HTTPS中唯一的一次非对称加密。</font></li>
+<li>服务端用自己的私钥揭秘被自己公钥加密过的客户端随机数，这样客户端。服务端就都有了3个随机数。用之前约定的加密方式双方都能生成通信密钥。</li>
+<li>双方都要进行一次加密验证，看下这个加密算法能否正常使用。</li>
+<li>最后一步，它们就可以开始使用HTTPS进行加密通信了.</li>
 </ol>
+<p>在 TLS 握手阶段，两端使用非对称加密的方式来通信，但是因为非对称加密损耗的性能比对称加密大，所以在正式传输数据时，两端使用对称加密的方式通信。</p>
 <p>第三方能伪造证书吗？<br><strong><font color="#83bbec">不能，证书的签名是由服务端网址等信息生成的，并且经过机构私钥加密，中间人无法篡改。</font></strong></p>
 <p>参考 <a href="https://zhuanlan.zhihu.com/p/57142784" target="_blank" rel="noopener">漫画：什么是 HTTPS 协议？</a></p>
 <hr>

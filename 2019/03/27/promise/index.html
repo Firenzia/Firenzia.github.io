@@ -77,20 +77,20 @@
 
 
 
-<meta name="description" content="浅谈理解Promise A+(手绘简略版)详细参考：https://promisesaplus.com/   promise本质 の 个人理解一个promise实例可以看作一个容器，里面会维护状态，异步操作结果，异步操作后成功回调， 异步操作后失败回调  status: string  内部状态（可能是pending, resolved, rejected） value: any  异步操作的结果">
+<meta name="description" content="浅谈理解Promise A+(手绘简略版)详细参考：https://promisesaplus.com/   123456var obj1 =&amp;#123;	name:&apos;helianthus&apos;,	then:(resolvePromise,rejectPromise)=&amp;gt;&amp;#123;resolvePromise(100)&amp;#125;&amp;#125;var p1 = Promise.resolve(1">
 <meta name="keywords" content="js基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="promise深入学习">
 <meta property="og:url" content="http://yoursite.com/2019/03/27/promise/index.html">
 <meta property="og:site_name" content="佛罗伦萨有朵云">
-<meta property="og:description" content="浅谈理解Promise A+(手绘简略版)详细参考：https://promisesaplus.com/   promise本质 の 个人理解一个promise实例可以看作一个容器，里面会维护状态，异步操作结果，异步操作后成功回调， 异步操作后失败回调  status: string  内部状态（可能是pending, resolved, rejected） value: any  异步操作的结果">
+<meta property="og:description" content="浅谈理解Promise A+(手绘简略版)详细参考：https://promisesaplus.com/   123456var obj1 =&amp;#123;	name:&apos;helianthus&apos;,	then:(resolvePromise,rejectPromise)=&amp;gt;&amp;#123;resolvePromise(100)&amp;#125;&amp;#125;var p1 = Promise.resolve(1">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/03/27/promise/promiseAPlus.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/03/27/promise/promise.png">
-<meta property="og:updated_time" content="2019-06-26T16:32:53.543Z">
+<meta property="og:updated_time" content="2019-06-28T15:03:03.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="promise深入学习">
-<meta name="twitter:description" content="浅谈理解Promise A+(手绘简略版)详细参考：https://promisesaplus.com/   promise本质 の 个人理解一个promise实例可以看作一个容器，里面会维护状态，异步操作结果，异步操作后成功回调， 异步操作后失败回调  status: string  内部状态（可能是pending, resolved, rejected） value: any  异步操作的结果">
+<meta name="twitter:description" content="浅谈理解Promise A+(手绘简略版)详细参考：https://promisesaplus.com/   123456var obj1 =&amp;#123;	name:&apos;helianthus&apos;,	then:(resolvePromise,rejectPromise)=&amp;gt;&amp;#123;resolvePromise(100)&amp;#125;&amp;#125;var p1 = Promise.resolve(1">
 <meta name="twitter:image" content="http://yoursite.com/2019/03/27/promise/promiseAPlus.jpg">
 
 
@@ -344,6 +344,7 @@
 
       
         <h1 id="浅谈理解"><a href="#浅谈理解" class="headerlink" title="浅谈理解"></a>浅谈理解</h1><h2 id="Promise-A-手绘简略版"><a href="#Promise-A-手绘简略版" class="headerlink" title="Promise A+(手绘简略版)"></a>Promise A+(手绘简略版)</h2><p>详细参考：<a href="https://promisesaplus.com/" target="_blank" rel="noopener">https://promisesaplus.com/</a><br><img src="/2019/03/27/promise/promiseAPlus.jpg">  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 =&#123;</span><br><span class="line">	name:<span class="string">'helianthus'</span>,</span><br><span class="line">	then:<span class="function">(<span class="params">resolvePromise,rejectPromise</span>)=&gt;</span>&#123;resolvePromise(<span class="number">100</span>)&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="built_in">Promise</span>.resolve(<span class="number">1</span>).then(<span class="function"><span class="params">()</span>=&gt;</span>obj1) <span class="comment">//Promise &#123;&lt;resolved&gt;: 100&#125;</span></span><br></pre></td></tr></table></figure>
 <h2 id="promise本质-の-个人理解"><a href="#promise本质-の-个人理解" class="headerlink" title="promise本质 の 个人理解"></a>promise本质 の 个人理解</h2><p>一个promise实例可以看作一个容器，里面会维护状态，异步操作结果，异步操作后成功回调， 异步操作后失败回调</p>
 <ul>
 <li><strong><font color="#7499e1">status: string </font></strong> 内部状态（可能是pending, resolved, rejected）</li>
